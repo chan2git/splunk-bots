@@ -3,3 +3,13 @@
 ### Q101
 What is the likely IPv4 address of someone from the Po1s0n1vy group scanning imreallynotbatman.com for web application vulnerabilities?
 
+First, we need to identify the IP address that belongs to our web server, which is likely what the threat group is scanning. We can run the below SPL query to return the destination IP address with the highest hits, which is likely indicative of a web server.
+
+`
+index="botsv1" sourcetype="stream:http"
+| top dest_ip
+`
+
+After running this SPL query, we see that the IP address with the most hits is `192.168.250.70`.
+
+![ss1](https://github.com/chan2git/splunk-bots/botsv1/screenshots/ss1.png)
