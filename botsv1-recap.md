@@ -7,6 +7,9 @@ First, we need to identify the IP address that belongs to our web server, which 
 
 `
 index="botsv1" sourcetype="stream:http"
+`
+<br>
+`
 | top dest_ip
 `
 
@@ -17,6 +20,9 @@ After running this SPL query, we see that the IP address with the most hits is `
 We can double check and confirm that this is in fact the IP address that belongs to `imreallynotbatman.com` by adding the IP address into the query, and then checking what data it is most commonly associated with in the `site` field.
 
 `
-index="botsv1" sourcetype="stream:http" dest_ip="192.168.250.70" <br>
+index="botsv1" sourcetype="stream:http" dest_ip="192.168.250.70"
+`
+<br>
+`
 | top site
 `
