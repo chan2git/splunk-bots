@@ -12,4 +12,4 @@ index="botsv1" sourcetype="stream:http"
 
 After running this SPL query, we see that the IP address with the most hits is `192.168.250.70`.
 
-![ss1](https://github.com/chan2git/splunk-bots/botsv1/screenshots/ss1.png)
+![ss1](./botsv1/images/ss1.png)
