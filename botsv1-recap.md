@@ -89,7 +89,7 @@ index="botsv1" sourcetype="stream:http" dest_ip="192.168.250.70" http_method=POS
 | top form_data limit=0
 ```
 
-After sifting through some pages, we'll come across some interesting values that appear to be related to login attempts - particarly in a potential brute force manner. We can click on any of the values to view the event and then locate the associated `src_ip`, which is likely the threat actor.
+After sifting through some pages, we'll come across some interesting values that appear to be related to login attempts - particularly in a potential brute force manner. We can click on any of the values to view the event and then locate the associated `src_ip`, which is likely the threat actor.
 
 ![ss9](./botsv1/images/ss9.png)
 
@@ -108,4 +108,9 @@ index="botsv1" sourcetype="fgt_utm" srcip="40.80.148.42" *.exe*
 
 Our results will show us that there is a field named `filename` with the value `3791.exe` that is associated with the source IP address that belongs to the threat actor. Clicking on the `filename` field to expand it shows that `3739.exe` is the only executable file, so this is likely the file that was uploaded by the theat actor.
 
+![ss11](./botsv1/images/ss11.png)
+
+![ss12](./botsv1/images/ss12.png)
+
 #### Answer: 3791.exe
+
