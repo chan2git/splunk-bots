@@ -100,10 +100,10 @@ After sifting through some pages, we'll come across some interesting values that
 
 ## Q8: What is the name of the executable uploaded by Po1s0n1vy?
 
-For this question, we'll need to change our sourcetype to `fgt_utm`. We know that the threat actor's IP address is `40.80.148.42` and we are looking for some sort of executable file. Based on what we know, we can build the below SPL query and include a wildcard for .exe (a common executable file extension).
+For this question, we'll need to change our sourcetype to `fgt_utm`. We know that the threat actor's IP address is `40.80.148.42` and we are looking for some sort of executable file. Based on what we know, we can build the below SPL query and include a wildcard * for .exe (a common executable file extension).
 
 ```
-index="botsv1" sourcetype="fgt_utm" srcip="40.80.148.42" *.exe*
+index="botsv1" sourcetype="fgt_utm" srcip="40.80.148.42" *.exe
 ```
 
 Our results will show us that there is a field named `filename` with the value `3791.exe` that is associated with the source IP address that belongs to the threat actor. Clicking on the `filename` field to expand it shows that `3739.exe` is the only executable file, so this is likely the file that was uploaded by the theat actor.
