@@ -22,7 +22,7 @@ index="botsv1" sourcetype="stream:http" dest_ip="192.168.250.70"
 ![ss2](./botsv1/images/ss2.png)
 
 
-Using this information, we are not interested to know which `src_ip` has the highest hits to `192.168.250.70`, which may be indicative of web scanning and thus our threat actor. We can run the below SPL query and pipe in the top `src_ip` command, which will reveal `40.80.148.42` as the top count (substantially more than the others).
+Using this information, we are now interested to know which `src_ip` has the highest hits to `192.168.250.70`, which may be indicative of web scanning and thus our threat actor. We can run the below SPL query and pipe in the top `src_ip` command, which will reveal `40.80.148.42` as the top count (substantially more than the others).
 
 ```
 index="botsv1" sourcetype="stream:http" dest_ip="192.168.250.70" 
