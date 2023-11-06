@@ -70,35 +70,61 @@ index="botsv1" sourcetype="stream:http" dest_ip="192.168.250.70" src_ip="40.80.1
 #### Answer: Joomla
 
 
+
+## Q4: What is the name of the file that defaced the imreallynotbatman.com website? Please submit only the name of the file with extension?
+
+If we assume our server downloaded the malicious file, then we know that our server can be considered the source IP address. We also know that downloads utilize the HTTP GET method. We can build the below SPL query and see if we find anything interesting.
+
+```
+index="botsv1" sourcetype="stream:http" src_ip="192.168.250.70" http_method=GET
+```
+
+Glancing at the results, we see that some hits contain a `request` field referencing the HTTP GET method used for a file named `poisonivy-is-coming-for-you-batman.jpeg`, which is likely the the file that defaced the `imreallynotbadman.com` website.
+
+![ss13](./botsv1/images/ss13.png)
+
+#### Answer: poisonivy-is-coming-for-you-batman.jpeg
+
+
+
+
 ## Q5: This attack used dynamic DNS to resolve to the malicious IP. What fully qualified domain name (FQDN) is associated with this attack?
 
+When using Q4's SPL query, other interesting values are observed in the results. Notably, the `site` field associated with the HTTP GET method referencing `poisonivy-is-coming-for-you-batman.jpeg` has the value pointing to `prankglassinebracket.jumpingcrab.com`. This is likely the fully qualified domain that is resolved from the malicious IP address.
 
+See solution to Q4.
+
+
+#### Answer: prankglassinebracket.jumpingcrab.com
 
 
 ## Q6: What IPv4 address has Po1s0n1vy tied to domains that are pre-staged to attack Wayne Enterprises?
 
-
-
-
-## Q8: What IPv4 address is likely attempting a brute force password attack against imreallynotbatman.com?
-
-We know that login-related events use the HTTP GET method, so we can build our SPL query to also include `http_method=POST` to narrow our data in the sourcetype `stream:http` and for our IP address `192.168.250.70`. Login event data may be logged under the `form_data` field. To help us view only the values within the `form_data` field so we can sift through to find anything interesting, we can use the SPL query below
-
-```
-index="botsv1" sourcetype="stream:http" dest_ip="192.168.250.70" http_method=POST
-| top form_data limit=0
-```
-
-After sifting through some pages, we'll come across some interesting values that appear to be related to login attempts - particularly in a potential brute force manner. We can click on any of the values to view the event and then locate the associated `src_ip`, which is likely the threat actor.
-
-![ss9](./botsv1/images/ss9.png)
-
-![ss10](./botsv1/images/ss10.png)
+So far up to this point we've identified two malicious IP addresses. `40.80.148.42` has been associated to web vulnerability scanning and `23.22.63.114` has been associated to malicious files hosted on a domain. Based on this and if we had to pick one, it is likely `23.22.63.114`.
 
 #### Answer: 23.22.63.114
 
 
-## Q8: What is the name of the executable uploaded by Po1s0n1vy?
+## Q8: What IPv4 address is likely attempting a brute force password attack against imreallynotbatman.com?
+
+We know that login-related events use the HTTP GET method, so we can build our SPL query to also include `http_method=POST` to narrow our data in the sourcetype `stream:http` and for our IP address `192.168.250.70`. We can also assume that the brute force password attack is likely generating several hits coming from one singular IP address (assuming that only 1 IP address is involved).Login event data may be logged under the `form_data` field. 
+
+Knowing this, we can build the below SPL query to return to us a table that shows us the `form_data` values, the `uri` values (which can provide context on the page the HTTP GET method was used on and may come in handy later), and the event's associaed `src_ip`.
+
+```
+index=botsv1 sourcetype=stream:http dest_ip="192.168.250.70" http_method=POST 
+| stats count by src_ip, form_data, uri
+```
+
+Our table shows us that there are several results tied to the source IP address `23.22.63.114` which seems to be attempting multiple login attempts with the username "admin" and various passwords at the `uri` field value of `/joomla/administrator/index.php`. What this tells us is that the threat actor is conducting a brute force password attack on a administrator page from the source IP address of `23.22.63.114`.
+
+![ss9](./botsv1/images/ss9.png)
+
+
+#### Answer: 23.22.63.114
+
+
+## Q9: What is the name of the executable uploaded by Po1s0n1vy?
 
 For this question, we'll need to change our sourcetype to `fgt_utm`. We know that the threat actor's IP address is `40.80.148.42` and we are looking for some sort of executable file. Based on what we know, we can build the below SPL query and include a wildcard * for .exe (a common executable file extension).
 
@@ -113,4 +139,94 @@ Our results will show us that there is a field named `filename` with the value `
 ![ss12](./botsv1/images/ss12.png)
 
 #### Answer: 3791.exe
+
+
+
+## Q10: What is the MD5 hash of the executable uploaded?
+
+Now that we know the malicious file name, we can update our SPL query to narrow in on `3791.exe`. In the results, we notice an interesting field called `file_hash`. Viewing the details for this field reveals that value of `ec78c938d8453739ca2a370b9c275971ec46caf6e479de2b2d04e97cc47fa45d`.
+
+![ss14](./botsv1/images/ss14.png)
+
+We might be tempted to think that this is the correct answer but this string contains 64 characters. We know md5 hash strings contain only 32 characters, so this cannot be our correct answer.
+
+We can try to find the malicious executable file in a different `sourcetype` like `xmlwineventlog:microsoft-windows-sysmon/operational` (Windows Sysmon) as it is plausible that the file may have been executed/opened by command line and it is common to record hashes of all files executed. We can use the below SPL query and see if we can find anything interesting.
+
+```
+index="botsv1" sourcetype="xmlwineventlog:microsoft-windows-sysmon/operational" "3791.exe"
+```
+
+
+We can (if it hasn't already) filter in and select a field called `CommandLine` and see that there is a value that matches our malicious file (`3791.exe`). When we tag on `"CommandLine="3791.exe"` to our query to further hone on, we get 1 result that has the `MD5` field with the value of `AAE3F5A29935E6ABCC2C2754D12A9AF0`.
+
+![ss16](./botsv1/images/ss16.png)
+
+#### Answer: AAE3F5A29935E6ABCC2C2754D12A9AF0
+
+
+
+
+
+## Q11: GCPD reported that common TTPs (Tactics, Techniques, Procedures) for the Po1s0n1vy APT group, if initial compromise fails, is to send a spear phishing email with custom malware attached to their intended target. This malware is usually connected to Po1s0n1vys initial attack infrastructure. Using research techniques, provide the SHA256 hash of this malware.
+
+We can search the malicious IP address `23.22.63.114` in VirusTotal and see if there are any other files associated to the threat actor's domain. When viewing and expanding on the details for the file called `MirandaTateScreensaver.scr.exe`, we can see it has a SHA256 hash value of `9709473ab351387aab9e816eff3910b9f28a7a70202e250ed46dba8f820f34a8`
+
+![ss17](./botsv1/images/ss17.png)
+
+
+![ss18](./botsv1/images/ss18.png)
+
+
+#### Answer: 9709473ab351387aab9e816eff3910b9f28a7a70202e250ed46dba8f820f34a8
+
+
+
+## Q12: What special hex code is associated with the customized malware discussed in question 11?
+
+Splunk BOTSv1 provides a hint that we'll need to do further external research somewhere on VirusTotal to identify the associated hex code. Wthin the Community Tab, we see the hex value of `53 74 65 76 65 20 42 72 61 6e 74 27 73 20 42 65 61 72 64 20 69 73 20 61 20 70 6f 77 65 72 66 75 6c 20 74 68 69 6e 67 2e 20 46 69 6e 64 20 74 68 69 73 20 6d 65 73 73 61 67 65 20 61 6e 64 20 61 73 6b 20 68 69 6d 20 74 6f 20 62 75 79 20 79 6f 75 20 61 20 62 65 65 72 21 21 21`
+
+![ss19](./botsv1/images/ss19.png)
+
+#### Answer: 53 74 65 76 65 20 42 72 61 6e 74 27 73 20 42 65 61 72 64 20 69 73 20 61 20 70 6f 77 65 72 66 75 6c 20 74 68 69 6e 67 2e 20 46 69 6e 64 20 74 68 69 73 20 6d 65 73 73 61 67 65 20 61 6e 64 20 61 73 6b 20 68 69 6d 20 74 6f 20 62 75 79 20 79 6f 75 20 61 20 62 65 65 72 21 21 21
+
+
+
+## Q14: What was the first brute force password used?
+
+To build out this SPL query, we'll use the SPL query from Q8 but now tag on `src_ip="23.22.63.114"` and `uri=/joomla/Administrator/index.php` to further hone in on the brute force attack.
+
+We'll also want to return a table that sorts the time from earliest to oldest and associates the string used for the brute force attack to the malicious IP address. Using the format of the values found inside of the `form_data` field, we can use RegEx to extract the string the threat actor used for the passwords. Using the SPL query below, we see that the first string used for the bruteforce password attack is `12345678`.
+
+```
+index=botsv1 sourcetype=stream:http dest_ip="192.168.250.70" src_ip="23.22.63.114" http_method=POST uri=/joomla/Administrator/index.php
+| rex field=form_data "passwd=(?<string>\w+)"
+| sort _time
+| table  _time src_ip string
+```
+
+![ss20](./botsv1/images/ss20.png)
+
+#### Answer: 12345678
+
+
+
+
+## Q15: One of the passwords in the brute force attack is James Brodsky's favorite Coldplay song. We are looking for a six character word on this one. Which is it?
+
+
+
+
+## Q16: What was the correct password for admin access to the content management system running "imreallynotbatman.com"?
+
+
+
+## Q17: What was the average password length used in the password brute forcing attempt? (Round to the closest whole integer)
+
+
+## Q18: How many seconds elapsed between the time the brute force password scan identified the correct password and the compromised login? (Round to 2 decimal places)
+
+
+
+## Q19: How many unique passwords were attempted in the brute force attempt?
+
 
