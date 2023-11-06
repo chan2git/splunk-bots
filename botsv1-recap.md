@@ -1,6 +1,8 @@
 # Splunk BOTS v1 Recap
 
-## Q1: What is the likely IPv4 address of someone from the Po1s0n1vy group scanning imreallynotbatman.com for web application vulnerabilities?
+## Scenario 1
+
+### Q1: What is the likely IPv4 address of someone from the Po1s0n1vy group scanning imreallynotbatman.com for web application vulnerabilities?
 
 First, we need to identify the IP address that belongs to our web server, which is likely what the threat group is scanning. We can run the below SPL query with the pipe command to return the destination IP address (`dest_ip`) with the highest hits, which is likely indicative of a web server.
 
@@ -43,7 +45,7 @@ index="botsv1" sourcetype="stream:http" dest_ip="192.168.250.70" src_ip="40.80.1
 
 #### Answer: 40.80.148.42 
 
-## Q2: What company created the web vulnerability scanner used by Po1s0n1vy?
+### Q2: What company created the web vulnerability scanner used by Po1s0n1vy?
 
 Based on the information we found in the `src_header` field that is associated to the IP address (40.80.148.42) of the threat actor, the company that created the web vulnerability scanner being used is **Acunetix**.
 
@@ -52,7 +54,7 @@ See Q1 Solution.
 #### Answer: Acunetix
 
 
-## Q3: What content management system is imreallynotbatman.com likely using?
+### Q3: What content management system is imreallynotbatman.com likely using?
 
 We can filter some of the results from Q1's SPL query by narrowing in on successful HTTP GET requests (status code 200) and see if we find anything interesting that may indicate the CMS. Using the below query, "Joomla" is mentioned several times in the same string as content management. An external search of Joomla indicate that it is a CMS. 
 
@@ -71,7 +73,7 @@ index="botsv1" sourcetype="stream:http" dest_ip="192.168.250.70" src_ip="40.80.1
 
 
 
-## Q4: What is the name of the file that defaced the imreallynotbatman.com website? Please submit only the name of the file with extension?
+### Q4: What is the name of the file that defaced the imreallynotbatman.com website? Please submit only the name of the file with extension?
 
 If we assume our server downloaded the malicious file, then we know that our server can be considered the source IP address. We also know that downloads utilize the HTTP GET method. We can build the below SPL query and see if we find anything interesting.
 
@@ -88,7 +90,7 @@ Glancing at the results, we see that some hits contain a `request` field referen
 
 
 
-## Q5: This attack used dynamic DNS to resolve to the malicious IP. What fully qualified domain name (FQDN) is associated with this attack?
+### Q5: This attack used dynamic DNS to resolve to the malicious IP. What fully qualified domain name (FQDN) is associated with this attack?
 
 When using Q4's SPL query, other interesting values are observed in the results. Notably, the `site` field associated with the HTTP GET method referencing `poisonivy-is-coming-for-you-batman.jpeg` has the value pointing to `prankglassinebracket.jumpingcrab.com`. This is likely the fully qualified domain that is resolved from the malicious IP address.
 
@@ -98,14 +100,14 @@ See solution to Q4.
 #### Answer: prankglassinebracket.jumpingcrab.com
 
 
-## Q6: What IPv4 address has Po1s0n1vy tied to domains that are pre-staged to attack Wayne Enterprises?
+### Q6: What IPv4 address has Po1s0n1vy tied to domains that are pre-staged to attack Wayne Enterprises?
 
 So far up to this point we've identified two malicious IP addresses. `40.80.148.42` has been associated to web vulnerability scanning and `23.22.63.114` has been associated to malicious files hosted on a domain. Based on this and if we had to pick one, it is likely `23.22.63.114`.
 
 #### Answer: 23.22.63.114
 
 
-## Q8: What IPv4 address is likely attempting a brute force password attack against imreallynotbatman.com?
+### Q8: What IPv4 address is likely attempting a brute force password attack against imreallynotbatman.com?
 
 We know that login-related events use the HTTP GET method, so we can build our SPL query to also include `http_method=POST` to narrow our data in the sourcetype `stream:http` and for our IP address `192.168.250.70`. We can also assume that the brute force password attack is likely generating several hits coming from one singular IP address (assuming that only 1 IP address is involved).Login event data may be logged under the `form_data` field. 
 
@@ -124,7 +126,7 @@ Our table shows us that there are several results tied to the source IP address 
 #### Answer: 23.22.63.114
 
 
-## Q9: What is the name of the executable uploaded by Po1s0n1vy?
+### Q9: What is the name of the executable uploaded by Po1s0n1vy?
 
 For this question, we'll need to change our sourcetype to `fgt_utm`. We know that the threat actor's IP address is `40.80.148.42` and we are looking for some sort of executable file. Based on what we know, we can build the below SPL query and include a wildcard * for .exe (a common executable file extension).
 
@@ -142,7 +144,7 @@ Our results will show us that there is a field named `filename` with the value `
 
 
 
-## Q10: What is the MD5 hash of the executable uploaded?
+### Q10: What is the MD5 hash of the executable uploaded?
 
 Now that we know the malicious file name, we can update our SPL query to narrow in on `3791.exe`. In the results, we notice an interesting field called `file_hash`. Viewing the details for this field reveals that value of `ec78c938d8453739ca2a370b9c275971ec46caf6e479de2b2d04e97cc47fa45d`.
 
@@ -181,7 +183,7 @@ We can search the malicious IP address `23.22.63.114` in VirusTotal and see if t
 
 
 
-## Q12: What special hex code is associated with the customized malware discussed in question 11?
+### Q12: What special hex code is associated with the customized malware discussed in question 11?
 
 Splunk BOTSv1 provides a hint that we'll need to do further external research somewhere on VirusTotal to identify the associated hex code. Wthin the Community Tab, we see the hex value of `53 74 65 76 65 20 42 72 61 6e 74 27 73 20 42 65 61 72 64 20 69 73 20 61 20 70 6f 77 65 72 66 75 6c 20 74 68 69 6e 67 2e 20 46 69 6e 64 20 74 68 69 73 20 6d 65 73 73 61 67 65 20 61 6e 64 20 61 73 6b 20 68 69 6d 20 74 6f 20 62 75 79 20 79 6f 75 20 61 20 62 65 65 72 21 21 21`
 
@@ -191,7 +193,7 @@ Splunk BOTSv1 provides a hint that we'll need to do further external research so
 
 
 
-## Q14: What was the first brute force password used?
+### Q14: What was the first brute force password used?
 
 To build out this SPL query, we'll use the SPL query from Q8 but now tag on `src_ip="23.22.63.114"` and `uri=/joomla/Administrator/index.php` to further hone in on the brute force attack.
 
@@ -211,22 +213,22 @@ index=botsv1 sourcetype=stream:http dest_ip="192.168.250.70" src_ip="23.22.63.11
 
 
 
-## Q15: One of the passwords in the brute force attack is James Brodsky's favorite Coldplay song. We are looking for a six character word on this one. Which is it?
+### Q15: One of the passwords in the brute force attack is James Brodsky's favorite Coldplay song. We are looking for a six character word on this one. Which is it?
 
 
 
 
-## Q16: What was the correct password for admin access to the content management system running "imreallynotbatman.com"?
+### Q16: What was the correct password for admin access to the content management system running "imreallynotbatman.com"?
 
 
 
-## Q17: What was the average password length used in the password brute forcing attempt? (Round to the closest whole integer)
+### Q17: What was the average password length used in the password brute forcing attempt? (Round to the closest whole integer)
 
 
-## Q18: How many seconds elapsed between the time the brute force password scan identified the correct password and the compromised login? (Round to 2 decimal places)
+### Q18: How many seconds elapsed between the time the brute force password scan identified the correct password and the compromised login? (Round to 2 decimal places)
 
 
 
-## Q19: How many unique passwords were attempted in the brute force attempt?
+### Q19: How many unique passwords were attempted in the brute force attempt?
 
 
