@@ -1,6 +1,6 @@
 # Splunk BOTS v1 Recap
 
-## Scenario 1
+## Scenario 1: Web Site Defacement
 
 ### Q1: What is the likely IPv4 address of someone from the Po1s0n1vy group scanning imreallynotbatman.com for web application vulnerabilities?
 
@@ -215,20 +215,175 @@ index=botsv1 sourcetype=stream:http dest_ip="192.168.250.70" src_ip="23.22.63.11
 
 ### Q15: One of the passwords in the brute force attack is James Brodsky's favorite Coldplay song. We are looking for a six character word on this one. Which is it?
 
+There are multiple ways to approach this. One way would be to locate a list of all Coldplay songs (from Wikipedia, etc) and paste them into a column (e.g. column A) within Microsoft Excel. You can then use the function `=IF(LEN(A:A) = 6, "Contains 6 characters", "Does not contain 6 characters")
+` in the adjacent column (e.g. column B) and let Excel determine which cells have six characters. You can then filter only for rows indicated as having six characters.
+
+From the filtered results, we may notice that some songs (`J-Hope`, `U.F.O.`) were considered to have six characters even though they consisted of special characters. Technically, they do contain six characters it seems the threat actor did not utilize any special characters in their brute force password attack so we will exclude `J-Hope` and `U.F.O.`.
+
+What we're left with are `Aliens`, `Broken`, `Church`, `Clocks`, `Murder`, `Ocean`, `Shiver`, `Sparks`, `Wizkid`, and `Yellow`.
+
+
+![ss21](./botsv1/images/ss21.png)
+
+
+Taking note of the 10 Coldplay song titles with six characters (excluding special characters), we can modify our previous SPL query from Q14. Using RegEx, we'll want to identify any case-insensitive strings submitted as a password that are six characters in length. We'll take those RegEx matches and then search/compare them in a list that we'll populate with the aforementioned 10 Coldplay song titles and display the results in a table.
+
+After running the below query, we see that there is a match to `yellow`.
+
+```
+index=botsv1 sourcetype=stream:http dest_ip="192.168.250.70" src_ip="23.22.63.114" http_method=POST uri=/joomla/Administrator/index.php
+| rex field=form_data "(?i)passwd=(?<string>[a-zA-Z]{6})"
+| search string IN (Aliens, Broken, Church, Clocks, Murder, Oceans, Shiver, Sparks, Wizkid, Yellow)
+| table src_ip string
+```
+
+
+![ss22](./botsv1/images/ss22.png)
+
+#### Answer: yellow
 
 
 
 ### Q16: What was the correct password for admin access to the content management system running "imreallynotbatman.com"?
 
+Let's think about this one carefully. We know that the threat actor completed a brute force password attack, of which there is a possibility that all but one string worked. The one string that works may stand out to us when viewing log data in that it may have been used the most frequent in comparison to other strings which may have only been used once as part of the brute force. We wouldn't expect to see multiple counts of the same failed string (unless the threat actor conducted multiple brute force password attacks that utilized overlapping strings, but we'd be able to deduce that).
+
+We can use the below SPL query to sort by the strings attempted by frequency and see if theres any that has been uniquely used more frequently than others. We'll also omit the malicious IP address from our query for now as we may want to account that the correct password is used by others (e.g. authorized users).
+
+```
+index=botsv1 sourcetype=stream:http dest_ip="192.168.250.70" http_method=POST uri=/joomla/Administrator/index.php
+| rex field=form_data "passwd=(?<string>\w+)"
+| stats count by string
+| sort - count
+| table string, count
+```
+
+![ss24](./botsv1/images/ss24.png)
+
+
+
+We can see from the results that all strings but one have a count of 1, while `batman` has a count of 2. Based on these results, `batman` appears to be the correct password.
+
+#### Answer: batman
+
+
 
 
 ### Q17: What was the average password length used in the password brute forcing attempt? (Round to the closest whole integer)
 
+We can modify the SPL query from Q14 and utilize the `eval` and `stats` function to determine the average lengnth. Using the below query, we see that the average string length for the brute force password attack rounded to the closest whole integer is 6.
+
+
+![ss25](./botsv1/images/ss25.png)
+
+
+#### Answer: 6
+
+
+
 
 ### Q18: How many seconds elapsed between the time the brute force password scan identified the correct password and the compromised login? (Round to 2 decimal places)
 
+We know that `batman` appears to be the correct password and that it was utilized twice - once during the brute force attempt and subsuqently once more as the potential compromised login. We can build the below SPL query to return results for only these two events and then apply the `transaction` and `table` function to calculate the elapsed time and present as a table. Using the SPL query below, 92.17 seconds elapsed.
+
+```
+index=botsv1 sourcetype=stream:http dest_ip="192.168.250.70" http_method=POST form_data=*passwd*batman*
+| rex field=form_data "passwd=(?<string>\w+)"
+| transaction string
+| table duration
+```
+
+![ss23](./botsv1/images/ss23.png)
+
+
+#### Answer: 92.17
 
 
 ### Q19: How many unique passwords were attempted in the brute force attempt?
+
+Using the SPL query from Q14, we can see that there were 412 events/statistic results - one for each unique attempted string during the brute force password attack.
+
+See solution to Q14.
+
+#### Answer: 412
+
+
+
+## Scenario 2: Ransomware
+
+
+
+### Q0: What was the most likely IPv4 address of we8105desk on 24AUG2016?
+
+
+
+#### Answer: 
+
+
+
+### Q200: What was the most likely IPv4 address of we8105desk on 24AUG2016?
+
+
+
+#### Answer: 
+
+
+
+
+### Q201: Amongst the Suricata signatures that detected the Cerber malware, which one alerted the fewest number of times? Submit ONLY the signature ID value as the answer. (No puinctuation, just 7 digits)
+
+
+
+#### Answer: 
+
+
+
+### Q202: What fully qualified domain name (FQDN) does the Cerber ransomware attempt to direct the user to at the end of its encryption phase?
+
+
+
+#### Answer: 
+
+
+
+
+
+### Q203: What was the first suspicious domain visited by we8105desk on 24AUG2016?
+
+
+
+#### Answer: 
+
+
+
+
+### Q206: Bob Smith's workstation (we8105desk) was connected to a file server during the ransomware outbreak. What is the IPv4 address of the file server?
+
+
+
+#### Answer:
+
+
+
+### Q209: The Cerber ransomware encrypts files located in Bob Smith's Windows profile. How many .txt files does it encrypt?
+
+#### Answer:
+
+
+
+### Q210: The malware downloads a file that contains the Cerber ransomware cryptor code. What is the name of that file?
+
+
+
+#### Answer: 
+
+
+
+### Q211: Now that you know the name of the ransomware's encryptor file, what obfuscation technique does it likely use?
+
+
+
+#### Answer: 
+
 
 
