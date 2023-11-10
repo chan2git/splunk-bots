@@ -20,11 +20,11 @@
     * [Q108: What IPv4 address is likely attempting a brute force password attack against imreallynotbatman.com?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q108-what-ipv4-address-is-likely-attempting-a-brute-force-password-attack-against-imreallynotbatmancom)
 
     * [Q109: What is the name of the executable uploaded by Po1s0n1vy?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q109-what-is-the-name-of-the-executable-uploaded-by-po1s0n1vy)
-    * [Q110: What is the MD5 hash of the executable uploaded?](urhttps://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q110-what-is-the-md5-hash-of-the-executable-uploadedl)
+    * [Q110: What is the MD5 hash of the executable uploaded?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q110-what-is-the-md5-hash-of-the-executable-uploadedl)
 
     * [Q111: GCPD reported that common TTPs (Tactics, Techniques, Procedures) for the Po1s0n1vy APT group, if initial compromise fails, is to send a spear phishing email with custom malware attached to their intended target. This malware is usually connected to Po1s0n1vys initial attack infrastructure. Using research techniques, provide the SHA256 hash of this malware](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q111-gcpd-reported-that-common-ttps-tactics-techniques-procedures-for-the-po1s0n1vy-apt-group-if-initial-compromise-fails-is-to-send-a-spear-phishing-email-with-custom-malware-attached-to-their-intended-target-this-malware-is-usually-connected-to-po1s0n1vys-initial-attack-infrastructure-using-research-techniques-provide-the-sha256-hash-of-this-malware)
 
-    * [Q112: What special hex code is associated with the customized malware discussed in question 111?](uhttps://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q112-what-special-hex-code-is-associated-with-the-customized-malware-discussed-in-question-11rl)
+    * [Q112: What special hex code is associated with the customized malware discussed in question 111?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q112-what-special-hex-code-is-associated-with-the-customized-malware-discussed-in-question-11rl)
 
     * [Q114: What was the first brute force password used?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q114-what-was-the-first-brute-force-password-used)
 
