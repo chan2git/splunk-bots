@@ -7,3 +7,4 @@
  # Completed BOTS
  
  - [Splunk BOTSv1](https://github.com/chan2git/splunk-bots/tree/main/botsv1)
+ - Splunk BOTSv2 (in-progress)
