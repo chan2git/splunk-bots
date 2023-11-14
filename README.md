@@ -4,7 +4,7 @@
  To be eventually updated with all BOTS events.
  
  
- # Completed BOTS
+ # Walkthroughs
  
  - [Splunk BOTSv1](https://github.com/chan2git/splunk-bots/tree/main/botsv1)
  - Splunk BOTSv2 (in-progress)
