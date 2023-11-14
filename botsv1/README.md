@@ -4,60 +4,66 @@ This Splunk BOTS recap and walkthrough is based on the Version 1 (2015) event. Y
 
 ## Table of Contents
 
-* [Scenario 1: Website Defacement](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#scenario-101-web-site-defacement)
+* [Scenario 1: Website Defacement](https://github.com/chan2git/splunk-bots/tree/main/botsv1#scenario-1-web-site-defacement)
 
-    * [Q101: What is the likely IPv4 address of someone from the Po1s0n1vy group scanning imreallynotbatman.com for web application vulnerabilities?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q1-what-is-the-likely-ipv4-address-of-someone-from-the-po1s0n1vy-group-scanning-imreallynotbatmancom-for-web-application-vulnerabilities)
+    * [Q101: What is the likely IPv4 address of someone from the Po1s0n1vy group scanning imreallynotbatman.com for web application vulnerabilities?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q102-what-company-created-the-web-vulnerability-scanner-used-by-po1s0n1vy)
 
     * [Q102: What company created the web vulnerability scanner used by Po1s0n1vy?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q102-what-company-created-the-web-vulnerability-scanner-used-by-po1s0n1vy)
 
-    * [Q103: What content management system is imreallynotbatman.com likely using?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q103-what-content-management-system-is-imreallynotbatmancom-likely-using)
+    * [Q103: What content management system is imreallynotbatman.com likely using?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q103-what-content-management-system-is-imreallynotbatmancom-likely-using)
 
-    * [Q104: What is the name of the file that defaced the imreallynotbatman.com website? Please submit only the name of the file with extension?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q104-what-is-the-name-of-the-file-that-defaced-the-imreallynotbatmancom-website-please-submit-only-the-name-of-the-file-with-extension)
+    * [Q104: What is the name of the file that defaced the imreallynotbatman.com website? Please submit only the name of the file with extension?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q104-what-is-the-name-of-the-file-that-defaced-the-imreallynotbatmancom-website-please-submit-only-the-name-of-the-file-with-extension)
 
-    * [Q105: This attack used dynamic DNS to resolve to the malicious IP. What fully qualified domain name (FQDN) is associated with this attack?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q105-this-attack-used-dynamic-dns-to-resolve-to-the-malicious-ip-what-fully-qualified-domain-name-fqdn-is-associated-with-this-attack)
+    * [Q105: This attack used dynamic DNS to resolve to the malicious IP. What fully qualified domain name (FQDN) is associated with this attack?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#answer-poisonivy-is-coming-for-you-batmanjpeg)
 
-    * [Q106: What IPv4 address has Po1s0n1vy tied to domains that are pre-staged to attack Wayne Enterprises?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q106-what-ipv4-address-has-po1s0n1vy-tied-to-domains-that-are-pre-staged-to-attack-wayne-enterprises)
+    * [Q106: What IPv4 address has Po1s0n1vy tied to domains that are pre-staged to attack Wayne Enterprises?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q106-what-ipv4-address-has-po1s0n1vy-tied-to-domains-that-are-pre-staged-to-attack-wayne-enterprises)
 
-    * [Q108: What IPv4 address is likely attempting a brute force password attack against imreallynotbatman.com?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q108-what-ipv4-address-is-likely-attempting-a-brute-force-password-attack-against-imreallynotbatmancom)
+    * [Q108: What IPv4 address is likely attempting a brute force password attack against imreallynotbatman.com?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q108-what-ipv4-address-is-likely-attempting-a-brute-force-password-attack-against-imreallynotbatmancom)
 
-    * [Q109: What is the name of the executable uploaded by Po1s0n1vy?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q109-what-is-the-name-of-the-executable-uploaded-by-po1s0n1vy)
-    * [Q110: What is the MD5 hash of the executable uploaded?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q110-what-is-the-md5-hash-of-the-executable-uploadedl)
+    * [Q109: What is the name of the executable uploaded by Po1s0n1vy?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q109-what-is-the-name-of-the-executable-uploaded-by-po1s0n1vy)
 
-    * [Q111: GCPD reported that common TTPs (Tactics, Techniques, Procedures) for the Po1s0n1vy APT group, if initial compromise fails, is to send a spear phishing email with custom malware attached to their intended target. This malware is usually connected to Po1s0n1vys initial attack infrastructure. Using research techniques, provide the SHA256 hash of this malware](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q111-gcpd-reported-that-common-ttps-tactics-techniques-procedures-for-the-po1s0n1vy-apt-group-if-initial-compromise-fails-is-to-send-a-spear-phishing-email-with-custom-malware-attached-to-their-intended-target-this-malware-is-usually-connected-to-po1s0n1vys-initial-attack-infrastructure-using-research-techniques-provide-the-sha256-hash-of-this-malware)
+    * [Q110: What is the MD5 hash of the executable uploaded?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q110-what-is-the-md5-hash-of-the-executable-uploaded)
 
-    * [Q112: What special hex code is associated with the customized malware discussed in question 111?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q112-what-special-hex-code-is-associated-with-the-customized-malware-discussed-in-question-11rl)
+    * [Q111: GCPD reported that common TTPs (Tactics, Techniques, Procedures) for the Po1s0n1vy APT group, if initial compromise fails, is to send a spear phishing email with custom malware attached to their intended target. This malware is usually connected to Po1s0n1vys initial attack infrastructure. Using research techniques, provide the SHA256 hash of this malware](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q111-gcpd-reported-that-common-ttps-tactics-techniques-procedures-for-the-po1s0n1vy-apt-group-if-initial-compromise-fails-is-to-send-a-spear-phishing-email-with-custom-malware-attached-to-their-intended-target-this-malware-is-usually-connected-to-po1s0n1vys-initial-attack-infrastructure-using-research-techniques-provide-the-sha256-hash-of-this-malware)
 
-    * [Q114: What was the first brute force password used?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q114-what-was-the-first-brute-force-password-used)
+    * [Q112: What special hex code is associated with the customized malware discussed in question 111?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q112-what-special-hex-code-is-associated-with-the-customized-malware-discussed-in-question-11)
 
-    * [Q115: One of the passwords in the brute force attack is James Brodsky's favorite Coldplay song. We are looking for a six character word on this one. Which is it?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q115-one-of-the-passwords-in-the-brute-force-attack-is-james-brodskys-favorite-coldplay-song-we-are-looking-for-a-six-character-word-on-this-one-which-is-it)
+    * [Q114: What was the first brute force password used?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q114-what-was-the-first-brute-force-password-used)
 
-    * [Q116: What was the correct password for admin access to the content management system running "imreallynotbatman.com"?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q116-what-was-the-correct-password-for-admin-access-to-the-content-management-system-running-imreallynotbatmancom)
+    * [Q115: One of the passwords in the brute force attack is James Brodsky's favorite Coldplay song. We are looking for a six character word on this one. Which is it?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q115-one-of-the-passwords-in-the-brute-force-attack-is-james-brodskys-favorite-coldplay-song-we-are-looking-for-a-six-character-word-on-this-one-which-is-it)
 
-    * [Q117: What was the average password length used in the password brute forcing attempt? (Round to the closest whole integer)](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q117-what-was-the-average-password-length-used-in-the-password-brute-forcing-attempt-round-to-the-closest-whole-integer)
+    * [Q116: What was the correct password for admin access to the content management system running "imreallynotbatman.com"?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q116-what-was-the-correct-password-for-admin-access-to-the-content-management-system-running-imreallynotbatmancom)
 
-    * [Q119: How many unique passwords were attempted in the brute force attempt?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q119-how-many-unique-passwords-were-attempted-in-the-brute-force-attempt)
+    * [Q117: What was the average password length used in the password brute forcing attempt? (Round to the closest whole integer)](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q117-what-was-the-average-password-length-used-in-the-password-brute-forcing-attempt-round-to-the-closest-whole-integer)
+
+    * [Q119: How many unique passwords were attempted in the brute force attempt?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q119-how-many-unique-passwords-were-attempted-in-the-brute-force-attempt)
 
 
-* [Scenario 2: Ransomware](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#scenario-2-ransomware)
+* [Scenario 2: Ransomware](https://github.com/chan2git/splunk-bots/tree/main/botsv1#scenario-2-ransomware)
 
-    * [Q200: What was the most likely IPv4 address of we8105desk on 24AUG2016?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q200-what-was-the-most-likely-ipv4-address-of-we8105desk-on-24aug2016)
-    * [Q201: Amongst the Suricata signatures that detected the Cerber malware, which one alerted the fewest number of times? Submit ONLY the signature ID value as the answer. (No puinctuation, just 7 digits)](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q201-amongst-the-suricata-signatures-that-detected-the-cerber-malware-which-one-alerted-the-fewest-number-of-times-submit-only-the-signature-id-value-as-the-answer-no-puinctuation-just-7-digits)
-    * [Q202: What fully qualified domain name (FQDN) does the Cerber ransomware attempt to direct the user to at the end of its encryption phase?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q202-what-fully-qualified-domain-name-fqdn-does-the-cerber-ransomware-attempt-to-direct-the-user-to-at-the-end-of-its-encryption-phase)
-    * [Q203: What was the first suspicious domain visited by we8105desk on 24AUG2016?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q203-what-was-the-first-suspicious-domain-visited-by-we8105desk-on-24aug2016)
+    * [Q200: What was the most likely IPv4 address of we8105desk on 24AUG2016?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q200-what-was-the-most-likely-ipv4-address-of-we8105desk-on-24aug2016)
 
-    * [Q204: During the initial Cerber infection a VB script is run. The entire script from this execution, pre-pended by the name of the launching .exe, can be found in a field in Splunk. What is the length of the value of this field?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q204-during-the-initial-cerber-infection-a-vb-script-is-run-the-entire-script-from-this-execution-pre-pended-by-the-name-of-the-launching-exe-can-be-found-in-a-field-in-splunk-what-is-the-length-of-the-value-of-this-field)
+    * [Q201: Amongst the Suricata signatures that detected the Cerber malware, which one alerted the fewest number of times? Submit ONLY the signature ID value as the answer. (No puinctuation, just 7 digits)](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q201-amongst-the-suricata-signatures-that-detected-the-cerber-malware-which-one-alerted-the-fewest-number-of-times-submit-only-the-signature-id-value-as-the-answer-no-puinctuation-just-7-digits)
+    
+    * [Q202: What fully qualified domain name (FQDN) does the Cerber ransomware attempt to direct the user to at the end of its encryption phase?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q202-what-fully-qualified-domain-name-fqdn-does-the-cerber-ransomware-attempt-to-direct-the-user-to-at-the-end-of-its-encryption-phase)
 
-    * [Q205: What is the name of the USB key inserted by Bob Smith?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q205-what-is-the-name-of-the-usb-key-inserted-by-bob-smith)
+    * [Q203: What was the first suspicious domain visited by we8105desk on 24AUG2016?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q203-what-was-the-first-suspicious-domain-visited-by-we8105desk-on-24aug2016)
 
-    * [Q206: Bob Smith's workstation (we8105desk) was connected to a file server during the ransomware outbreak. What is the IPv4 address of the file server?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q206-bob-smiths-workstation-we8105desk-was-connected-to-a-file-server-during-the-ransomware-outbreak-what-is-the-ipv4-address-of-the-file-server)
+    * [Q204: During the initial Cerber infection a VB script is run. The entire script from this execution, pre-pended by the name of the launching .exe, can be found in a field in Splunk. What is the length of the value of this field?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q204-during-the-initial-cerber-infection-a-vb-script-is-run-the-entire-script-from-this-execution-pre-pended-by-the-name-of-the-launching-exe-can-be-found-in-a-field-in-splunk-what-is-the-length-of-the-value-of-this-field)
 
-    * [Q207: How many distinct PDFs did the ransomware encrypt on the remote file server?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q207-how-many-distinct-pdfs-did-the-ransomware-encrypt-on-the-remote-file-server)
+    * [Q205: What is the name of the USB key inserted by Bob Smith?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q205-what-is-the-name-of-the-usb-key-inserted-by-bob-smith)
 
-    * [Q208: The VBscript found in question 204 launches 121214.tmp. What is the ParentProcessId of this initial launch?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q208-the-vbscript-found-in-question-204-launches-121214tmp-what-is-the-parentprocessid-of-this-initial-launch)
+    * [Q206: Bob Smith's workstation (we8105desk) was connected to a file server during the ransomware outbreak. What is the IPv4 address of the file server?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q206-bob-smiths-workstation-we8105desk-was-connected-to-a-file-server-during-the-ransomware-outbreak-what-is-the-ipv4-address-of-the-file-server)
 
-    * [Q210: The malware downloads a file that contains the Cerber ransomware cryptor code. What is the name of that file?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#q210-the-malware-downloads-a-file-that-contains-the-cerber-ransomware-cryptor-code-what-is-the-name-of-that-file)
+    * [Q207: How many distinct PDFs did the ransomware encrypt on the remote file server?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q207-how-many-distinct-pdfs-did-the-ransomware-encrypt-on-the-remote-file-server)
 
-    * [Q211: Now that you know the name of the ransomware's encryptor file, what obfuscation technique does it likely use?](https://github.com/chan2git/splunk-bots/blob/main/botsv1-recap.md#answer-steganography)
+    * [Q208: The VBscript found in question 204 launches 121214.tmp. What is the ParentProcessId of this initial launch?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q208-the-vbscript-found-in-question-204-launches-121214tmp-what-is-the-parentprocessid-of-this-initial-launch)
+
+    * [Q209: The Cerber ransomware encrypts files located in Bob Smith's Windows profile. How many .txt files does it encrypt?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q209-the-cerber-ransomware-encrypts-files-located-in-bob-smiths-windows-profile-how-many-txt-files-does-it-encrypt)
+
+    * [Q210: The malware downloads a file that contains the Cerber ransomware cryptor code. What is the name of that file?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q210-the-malware-downloads-a-file-that-contains-the-cerber-ransomware-cryptor-code-what-is-the-name-of-that-file)
+
+    * [Q211: Now that you know the name of the ransomware's encryptor file, what obfuscation technique does it likely use?](https://github.com/chan2git/splunk-bots/tree/main/botsv1#q211-now-that-you-know-the-name-of-the-ransomwares-encryptor-file-what-obfuscation-technique-does-it-likely-use)
 
 
 
@@ -105,7 +111,7 @@ index="botsv1" sourcetype="stream:http" dest_ip="192.168.250.70" src_ip="40.80.1
 
 ![ss5](./images/ss5.png)
 
-#### Answer: 40.80.148.42 
+**Answer: 40.80.148.42**
 
 ### Q102: What company created the web vulnerability scanner used by Po1s0n1vy?
 
@@ -113,7 +119,7 @@ Based on the information we found in the `src_header` field that is associated t
 
 See Q101 Solution.
 
-#### Answer: Acunetix
+**Answer: Acunetix**
 
 
 ### Q103: What content management system is imreallynotbatman.com likely using?
@@ -131,7 +137,7 @@ index="botsv1" sourcetype="stream:http" dest_ip="192.168.250.70" src_ip="40.80.1
 
 ![ss8](./images/ss8.png)
 
-#### Answer: Joomla
+**Answer: Joomla**
 
 
 
@@ -147,7 +153,7 @@ Glancing at the results, we see that some hits contain a `request` field referen
 
 ![ss13](./images/ss13.png)
 
-#### Answer: poisonivy-is-coming-for-you-batman.jpeg
+**Answer: poisonivy-is-coming-for-you-batman.jpeg**
 
 
 
@@ -159,14 +165,14 @@ When using Q4's SPL query, other interesting values are observed in the results.
 See solution to Q104.
 
 
-#### Answer: prankglassinebracket.jumpingcrab.com
+**Answer: prankglassinebracket.jumpingcrab.com**
 
 
 ### Q106: What IPv4 address has Po1s0n1vy tied to domains that are pre-staged to attack Wayne Enterprises?
 
 So far up to this point we've identified two malicious IP addresses. `40.80.148.42` has been associated to web vulnerability scanning and `23.22.63.114` has been associated to malicious files hosted on a domain. Based on this and if we had to pick one, it is likely `23.22.63.114`.
 
-#### Answer: 23.22.63.114
+**Answer: 23.22.63.114**
 
 
 ### Q108: What IPv4 address is likely attempting a brute force password attack against imreallynotbatman.com?
@@ -185,7 +191,7 @@ Our table shows us that there are several results tied to the source IP address 
 ![ss9](./images/ss9.png)
 
 
-#### Answer: 23.22.63.114
+**Answer: 23.22.63.114**
 
 
 ### Q109: What is the name of the executable uploaded by Po1s0n1vy?
@@ -202,7 +208,7 @@ Our results will show us that there is a field named `filename` with the value `
 
 ![ss12](./images/ss12.png)
 
-#### Answer: 3791.exe
+**Answer: 3791.exe**
 
 
 
@@ -225,7 +231,7 @@ We can (if it hasn't already) filter in and select a field called `CommandLine` 
 
 ![ss16](./images/ss16.png)
 
-#### Answer: AAE3F5A29935E6ABCC2C2754D12A9AF0
+**Answer: AAE3F5A29935E6ABCC2C2754D12A9AF0**
 
 
 
@@ -241,7 +247,7 @@ We can search the malicious IP address `23.22.63.114` in VirusTotal and see if t
 ![ss18](./images/ss18.png)
 
 
-#### Answer: 9709473ab351387aab9e816eff3910b9f28a7a70202e250ed46dba8f820f34a8
+**Answer: 9709473ab351387aab9e816eff3910b9f28a7a70202e250ed46dba8f820f34a8**
 
 
 
@@ -251,7 +257,7 @@ Splunk BOTSv1 provides a hint that we'll need to do further external research so
 
 ![ss19](./images/ss19.png)
 
-#### Answer: 53 74 65 76 65 20 42 72 61 6e 74 27 73 20 42 65 61 72 64 20 69 73 20 61 20 70 6f 77 65 72 66 75 6c 20 74 68 69 6e 67 2e 20 46 69 6e 64 20 74 68 69 73 20 6d 65 73 73 61 67 65 20 61 6e 64 20 61 73 6b 20 68 69 6d 20 74 6f 20 62 75 79 20 79 6f 75 20 61 20 62 65 65 72 21 21 21
+**Answer: 53 74 65 76 65 20 42 72 61 6e 74 27 73 20 42 65 61 72 64 20 69 73 20 61 20 70 6f 77 65 72 66 75 6c 20 74 68 69 6e 67 2e 20 46 69 6e 64 20 74 68 69 73 20 6d 65 73 73 61 67 65 20 61 6e 64 20 61 73 6b 20 68 69 6d 20 74 6f 20 62 75 79 20 79 6f 75 20 61 20 62 65 65 72 21 21 21**
 
 
 
@@ -270,7 +276,7 @@ index=botsv1 sourcetype=stream:http dest_ip="192.168.250.70" src_ip="23.22.63.11
 
 ![ss20](./images/ss20.png)
 
-#### Answer: 12345678
+**Answer: 12345678**
 
 
 
@@ -302,7 +308,7 @@ index=botsv1 sourcetype=stream:http dest_ip="192.168.250.70" src_ip="23.22.63.11
 
 ![ss22](./images/ss22.png)
 
-#### Answer: yellow
+**Answer: yellow**
 
 
 
@@ -326,7 +332,7 @@ index=botsv1 sourcetype=stream:http dest_ip="192.168.250.70" http_method=POST ur
 
 We can see from the results that all strings but one have a count of 1, while `batman` has a count of 2. Based on these results, `batman` appears to be the correct password.
 
-#### Answer: batman
+**Answer: batman**
 
 
 
@@ -339,7 +345,7 @@ We can modify the SPL query from Q14 and utilize the `eval` and `stats` function
 ![ss25](./images/ss25.png)
 
 
-#### Answer: 6
+**Answer: 6**
 
 
 
@@ -358,7 +364,7 @@ index=botsv1 sourcetype=stream:http dest_ip="192.168.250.70" http_method=POST fo
 ![ss23](./images/ss23.png)
 
 
-#### Answer: 92.17
+**Answer: 92.17**
 
 
 ### Q119: How many unique passwords were attempted in the brute force attempt?
@@ -367,7 +373,7 @@ Using the SPL query from Q14, we can see that there were 412 events/statistic re
 
 See solution to Q114.
 
-#### Answer: 412
+**Answer: 412**
 
 
 
@@ -393,7 +399,7 @@ This leaves `192.168.250.100` as the likely IP address of the host machine were 
 
 
 
-#### Answer: 192.168.250.100
+**Answer: 192.168.250.100**
 
 
 
@@ -409,7 +415,7 @@ index=botsv1 sourcetype=suricata cerber
 ![ss28](./images/ss28.png)
 
 
-#### Answer: 2816763
+**Answer: 2816763**
 
 
 
@@ -437,7 +443,7 @@ index=botsv1 sourcetype="stream:dns" src_ip="192.168.250.100" queries=*cerber*
 ![ss30](./images/ss30.png)
 
 
-#### Answer: cerberhhyed5frqa.xmfir0.win
+**Answer: cerberhhyed5frqa.xmfir0.win**
 
 
 
@@ -447,7 +453,7 @@ index=botsv1 sourcetype="stream:dns" src_ip="192.168.250.100" queries=*cerber*
 
 See solution to Q202. Based on the table results and timestamp, the first unusual domain visited by we8015desk on 08/24/2016 appears to be `solidaritedeproximite.org`.
 
-#### Answer: solidaritedeproximite.org
+**Answer: solidaritedeproximite.org**
 
 
 ### Q204: During the initial Cerber infection a VB script is run. The entire script from this execution, pre-pended by the name of the launching .exe, can be found in a field in Splunk. What is the length of the value of this field?
@@ -475,7 +481,7 @@ index=botsv1 sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" ho
 ![ss37](./images/ss37.png)
 
 
-#### Answer: 4490
+**Answer: 4490**
 
 
 
@@ -492,7 +498,7 @@ index=botsv1 sourcetype=winregistry host=we8105desk friendlyname
 
 If we view the values for the field `registry_value_data`, we see that there's 2 counts for `MIRANDA_PRI`. This is likely the name of the USB device. Additionally, per BOTSv1 synposis, Bob found a USB drive in the parking lot, plugged it into his desktop, and opened a word document in the USB drive called "Miranda_Tate_unveiled.dotm".
 
-#### Answer: MIRANDA_PRI
+**Answer: MIRANDA_PRI**
 
 
 
@@ -518,7 +524,7 @@ index=botsv1 sourcetype="stream:smb" src_ip="192.168.250.100"
 
 ![ss32](./images/ss32.png)
 
-#### Answer: 192.168.250.20
+**Answer: 192.168.250.20**
 
 
 
@@ -543,7 +549,7 @@ index=botsv1 sourcetype="WinEventLog:Security" host=we9041srv *.pdf Source_Addre
 
 ![ss40](./images/ss40.png)
 
-#### Answer: 257 (?)
+**Answer: 257 (?)**
 
 
 
@@ -562,7 +568,7 @@ index=botsv1 sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" ho
 
 ![ss41](./images/ss41.png)
 
-#### Answer: 3968
+**Answer: 3968**
 
 
 
@@ -589,7 +595,7 @@ index=botsv1 sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" ho
 ```
 ![ss33](./images/ss33.png)
 
-#### Answer: 406
+**Answer: 406**
 
 
 
@@ -607,7 +613,7 @@ index=botsv1 sourcetype=suricata src_ip="192.168.250.100" solidaritedeproximite.
 We see that there's one file called `mhtr.jpg`. Seeing that it's associated with the unusual domain, this is likely the file containing the ransomware cryptor code.
 
 
-#### Answer: mhtr.jpg
+**Answer: mhtr.jpg**
 
 
 
@@ -618,7 +624,7 @@ Something to consider is that we were able to see within Splunk logs that the fi
 The obfuscation technique that the threat actor appeared to use is `steganography`, the practice of concealing additional information, data, and/or code (known as "payload") within another file (called a "carrier file", "container"). Carrier files and containers can range from jpg, mp3, mp4, and even pdf.
 
 
-#### Answer: Steganography
+**Answer: Steganography**
 
 
 
