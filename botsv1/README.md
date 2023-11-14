@@ -75,7 +75,7 @@ index="botsv1" sourcetype="stream:http"
 
 After running this SPL query, we see that the IP address with the most hits is `192.168.250.70`.
 
-![ss1](./botsv1/images/ss1.png)
+![ss1](./images/ss1.png)
 
 We can double check and confirm that this is in fact the IP address that belongs to `imreallynotbatman.com` by adding the IP address into the query, and then checking what data it is most commonly associated with in the `site` field. We'll see that it is most commonly associated to `imreallynotbatman.com`.
 
@@ -83,7 +83,7 @@ We can double check and confirm that this is in fact the IP address that belongs
 index="botsv1" sourcetype="stream:http" dest_ip="192.168.250.70"
 | top site
 ```
-![ss2](./botsv1/images/ss2.png)
+![ss2](./images/ss2.png)
 
 
 Using this information, we are now interested to know which `src_ip` has the highest hits to `192.168.250.70`, which may be indicative of web scanning and thus our threat actor. We can run the below SPL query and pipe in the top `src_ip` command, which will reveal `40.80.148.42` as the top count (substantially more than the others).
@@ -92,7 +92,7 @@ Using this information, we are now interested to know which `src_ip` has the hig
 index="botsv1" sourcetype="stream:http" dest_ip="192.168.250.70" 
 | top src_ip
 ```
-![ss3](./botsv1/images/ss3.png)
+![ss3](./images/ss3.png)
 
 With this piece of information, we can run the below SPL query and see what interesting information we can find in the results. Notably, some of the results contain a `src_headers` field which mention "Acunetix Web Vulnerability Scanner - Free Edition" - this confirms that the IP address `40.80.148.42` is conducting web vulnerability scanning and belongs to the threat actor.
 
@@ -101,9 +101,9 @@ With this piece of information, we can run the below SPL query and see what inte
 index="botsv1" sourcetype="stream:http" dest_ip="192.168.250.70" src_ip="40.80.148.42"
 ```
 
-![ss4](./botsv1/images/ss4.png)
+![ss4](./images/ss4.png)
 
-![ss5](./botsv1/images/ss5.png)
+![ss5](./images/ss5.png)
 
 #### Answer: 40.80.148.42 
 
@@ -125,11 +125,11 @@ We can filter some of the results from Q1's SPL query by narrowing in on success
 index="botsv1" sourcetype="stream:http" dest_ip="192.168.250.70" src_ip="40.80.148.42" status=200
 ```
 
-![ss6](./botsv1/images/ss6.png)
+![ss6](./images/ss6.png)
 
-![ss7](./botsv1/images/ss7.png)
+![ss7](./images/ss7.png)
 
-![ss8](./botsv1/images/ss8.png)
+![ss8](./images/ss8.png)
 
 #### Answer: Joomla
 
@@ -145,7 +145,7 @@ index="botsv1" sourcetype="stream:http" src_ip="192.168.250.70" http_method=GET
 
 Glancing at the results, we see that some hits contain a `request` field referencing the HTTP GET method used for a file named `poisonivy-is-coming-for-you-batman.jpeg`, which is likely the the file that defaced the `imreallynotbadman.com` website.
 
-![ss13](./botsv1/images/ss13.png)
+![ss13](./images/ss13.png)
 
 #### Answer: poisonivy-is-coming-for-you-batman.jpeg
 
@@ -182,7 +182,7 @@ index=botsv1 sourcetype=stream:http dest_ip="192.168.250.70" http_method=POST
 
 Our table shows us that there are several results tied to the source IP address `23.22.63.114` which seems to be attempting multiple login attempts with the username "admin" and various passwords at the `uri` field value of `/joomla/administrator/index.php`. What this tells us is that the threat actor is conducting a brute force password attack on a administrator page from the source IP address of `23.22.63.114`.
 
-![ss9](./botsv1/images/ss9.png)
+![ss9](./images/ss9.png)
 
 
 #### Answer: 23.22.63.114
@@ -198,9 +198,9 @@ index="botsv1" sourcetype="fgt_utm" srcip="40.80.148.42" *.exe
 
 Our results will show us that there is a field named `filename` with the value `3791.exe` that is associated with the source IP address that belongs to the threat actor. Clicking on the `filename` field to expand it shows that `3739.exe` is the only executable file, so this is likely the file that was uploaded by the theat actor.
 
-![ss11](./botsv1/images/ss11.png)
+![ss11](./images/ss11.png)
 
-![ss12](./botsv1/images/ss12.png)
+![ss12](./images/ss12.png)
 
 #### Answer: 3791.exe
 
@@ -210,7 +210,7 @@ Our results will show us that there is a field named `filename` with the value `
 
 Now that we know the malicious file name, we can update our SPL query to narrow in on `3791.exe`. In the results, we notice an interesting field called `file_hash`. Viewing the details for this field reveals that value of `ec78c938d8453739ca2a370b9c275971ec46caf6e479de2b2d04e97cc47fa45d`.
 
-![ss14](./botsv1/images/ss14.png)
+![ss14](./images/ss14.png)
 
 We might be tempted to think that this is the correct answer but this string contains 64 characters. We know md5 hash strings contain only 32 characters, so this cannot be our correct answer.
 
@@ -223,7 +223,7 @@ index="botsv1" sourcetype="xmlwineventlog:microsoft-windows-sysmon/operational" 
 
 We can (if it hasn't already) filter in and select a field called `CommandLine` and see that there is a value that matches our malicious file (`3791.exe`). When we tag on `"CommandLine="3791.exe"` to our query to further hone on, we get 1 result that has the `MD5` field with the value of `AAE3F5A29935E6ABCC2C2754D12A9AF0`.
 
-![ss16](./botsv1/images/ss16.png)
+![ss16](./images/ss16.png)
 
 #### Answer: AAE3F5A29935E6ABCC2C2754D12A9AF0
 
@@ -235,10 +235,10 @@ We can (if it hasn't already) filter in and select a field called `CommandLine` 
 
 We can search the malicious IP address `23.22.63.114` in VirusTotal and see if there are any other files associated to the threat actor's domain. When viewing and expanding on the details for the file called `MirandaTateScreensaver.scr.exe`, we can see it has a SHA256 hash value of `9709473ab351387aab9e816eff3910b9f28a7a70202e250ed46dba8f820f34a8`
 
-![ss17](./botsv1/images/ss17.png)
+![ss17](./images/ss17.png)
 
 
-![ss18](./botsv1/images/ss18.png)
+![ss18](./images/ss18.png)
 
 
 #### Answer: 9709473ab351387aab9e816eff3910b9f28a7a70202e250ed46dba8f820f34a8
@@ -249,7 +249,7 @@ We can search the malicious IP address `23.22.63.114` in VirusTotal and see if t
 
 Splunk BOTSv1 provides a hint that we'll need to do further external research somewhere on VirusTotal to identify the associated hex code. Wthin the Community Tab, we see the hex value of `53 74 65 76 65 20 42 72 61 6e 74 27 73 20 42 65 61 72 64 20 69 73 20 61 20 70 6f 77 65 72 66 75 6c 20 74 68 69 6e 67 2e 20 46 69 6e 64 20 74 68 69 73 20 6d 65 73 73 61 67 65 20 61 6e 64 20 61 73 6b 20 68 69 6d 20 74 6f 20 62 75 79 20 79 6f 75 20 61 20 62 65 65 72 21 21 21`
 
-![ss19](./botsv1/images/ss19.png)
+![ss19](./images/ss19.png)
 
 #### Answer: 53 74 65 76 65 20 42 72 61 6e 74 27 73 20 42 65 61 72 64 20 69 73 20 61 20 70 6f 77 65 72 66 75 6c 20 74 68 69 6e 67 2e 20 46 69 6e 64 20 74 68 69 73 20 6d 65 73 73 61 67 65 20 61 6e 64 20 61 73 6b 20 68 69 6d 20 74 6f 20 62 75 79 20 79 6f 75 20 61 20 62 65 65 72 21 21 21
 
@@ -268,7 +268,7 @@ index=botsv1 sourcetype=stream:http dest_ip="192.168.250.70" src_ip="23.22.63.11
 | table  _time src_ip string
 ```
 
-![ss20](./botsv1/images/ss20.png)
+![ss20](./images/ss20.png)
 
 #### Answer: 12345678
 
@@ -285,7 +285,7 @@ From the filtered results, we may notice that some songs (`J-Hope`, `U.F.O.`) we
 What we're left with are `Aliens`, `Broken`, `Church`, `Clocks`, `Murder`, `Ocean`, `Shiver`, `Sparks`, `Wizkid`, and `Yellow`.
 
 
-![ss21](./botsv1/images/ss21.png)
+![ss21](./images/ss21.png)
 
 
 Taking note of the 10 Coldplay song titles with six characters (excluding special characters), we can modify our previous SPL query from Q14. Using RegEx, we'll want to identify any case-insensitive strings submitted as a password that are six characters in length. We'll take those RegEx matches and then search/compare them in a list that we'll populate with the aforementioned 10 Coldplay song titles and display the results in a table.
@@ -300,7 +300,7 @@ index=botsv1 sourcetype=stream:http dest_ip="192.168.250.70" src_ip="23.22.63.11
 ```
 
 
-![ss22](./botsv1/images/ss22.png)
+![ss22](./images/ss22.png)
 
 #### Answer: yellow
 
@@ -320,7 +320,7 @@ index=botsv1 sourcetype=stream:http dest_ip="192.168.250.70" http_method=POST ur
 | table string, count
 ```
 
-![ss24](./botsv1/images/ss24.png)
+![ss24](./images/ss24.png)
 
 
 
@@ -336,7 +336,7 @@ We can see from the results that all strings but one have a count of 1, while `b
 We can modify the SPL query from Q14 and utilize the `eval` and `stats` function to determine the average lengnth. Using the below query, we see that the average string length for the brute force password attack rounded to the closest whole integer is 6.
 
 
-![ss25](./botsv1/images/ss25.png)
+![ss25](./images/ss25.png)
 
 
 #### Answer: 6
@@ -355,7 +355,7 @@ index=botsv1 sourcetype=stream:http dest_ip="192.168.250.70" http_method=POST fo
 | table duration
 ```
 
-![ss23](./botsv1/images/ss23.png)
+![ss23](./images/ss23.png)
 
 
 #### Answer: 92.17
@@ -383,9 +383,9 @@ There are multiple sourcetypes that could help identify the IP address of our `w
 index=botsv1 sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" host=we8105desk
 ```
 
-![ss26](./botsv1/images/ss26.png)
+![ss26](./images/ss26.png)
 
-![ss27](./botsv1/images/ss27.png)
+![ss27](./images/ss27.png)
 
 We see that there are 8 different values, all of which are displayed. Let's see if we can rule any of these out using conventional IT knowledge and concepts. Right away, we know that `c0a8:fa64:0:0:9820:26fc:1e0:ffff` and `fe80:0:0:0:9dac:222e:c1f8:d3d8` appear to be MAC addresses based on the format, so that can't the IP address we're looking for. `224.0.0.252` and `239.255.255.250` appear to be within the range that are typically reserved for multicast, so that can't be the host machine we are looking for either. `127.0.0.1` is a special purpose address known as a loopback address, so that is also wrong. `0.0.0.0` is not a typical local host machine IP address, so this is likely wrong as well. `192.168.250.255` is likely being used as a broadcast address on the subnet as indicated by it's 255 as the last octet, so this is also likely not our host machine either.
 
@@ -406,7 +406,7 @@ index=botsv1 sourcetype=suricata cerber
 | stats count by signature, alert.signature_id
 ```
 
-![ss28](./botsv1/images/ss28.png)
+![ss28](./images/ss28.png)
 
 
 #### Answer: 2816763
@@ -423,7 +423,7 @@ index=botsv1 sourcetype="stream:dns" src_ip="192.168.250.100" NOT query=*.arpa A
 | table _time, src_ip, dest_ip, queries
 ```
 
-![ss29](./botsv1/images/ss29.png)
+![ss29](./images/ss29.png)
 
 
 With the exclusion of most legitimate queries, we're left with only 83 results where we can see right away that there is a value that references cerber (`cerberhhyed5frqa.xmfir0.win`), which is likely the FQDN the Cerber ransomware is trying to direct the user to.
@@ -434,7 +434,7 @@ Alternatively, we could have tried a simplier SPL query and having the `queries`
 index=botsv1 sourcetype="stream:dns" src_ip="192.168.250.100" queries=*cerber*
 | table _time, src_ip, dest_ip, queries
 ```
-![ss30](./botsv1/images/ss30.png)
+![ss30](./images/ss30.png)
 
 
 #### Answer: cerberhhyed5frqa.xmfir0.win
@@ -461,7 +461,7 @@ index=botsv1 sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" ho
 | table _time, CommandLine
 ```
 
-![ss36](./botsv1/images/ss36.png)
+![ss36](./images/ss36.png)
 
 
 To determine the character length, we can modify our SPL query to pipe in the `eval` command and apply a `len` function to the `CommandLine` field. After running the modified SPL query below, we see that the character length is 4490.
@@ -472,7 +472,7 @@ index=botsv1 sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" ho
 | table _time, CommandLine, cmdlength
 ```
 
-![ss37](./botsv1/images/ss37.png)
+![ss37](./images/ss37.png)
 
 
 #### Answer: 4490
@@ -488,7 +488,7 @@ USB information can be found within the sourcetype `winregistry`. Windows stores
 ```
 index=botsv1 sourcetype=winregistry host=we8105desk friendlyname
 ```
-![ss38](./botsv1/images/ss38.png)
+![ss38](./images/ss38.png)
 
 If we view the values for the field `registry_value_data`, we see that there's 2 counts for `MIRANDA_PRI`. This is likely the name of the USB device. Additionally, per BOTSv1 synposis, Bob found a USB drive in the parking lot, plugged it into his desktop, and opened a word document in the USB drive called "Miranda_Tate_unveiled.dotm".
 
@@ -507,7 +507,7 @@ First, we know that there could be many types of "file server" - SMB, FTP, etc. 
 ```
 index=botsv1 src_ip="192.168.250.100"
 ```
-![ss31](./botsv1/images/ss31.png)
+![ss31](./images/ss31.png)
 
 Interestingly, we see `stream:smb` which may the SMB file server Bob's machine is connected to. If we were to add this sourcetype to our SPL query and present the results as a table showcasing the `dest_ip` field, we'll see that there's really only one IP address that Bob's machine connected to - `192.168.250.20`. This is likely the IP address of the SMB file server.
 
@@ -516,7 +516,7 @@ index=botsv1 sourcetype="stream:smb" src_ip="192.168.250.100"
 | stats count by src_ip, dest_ip
 ```
 
-![ss32](./botsv1/images/ss32.png)
+![ss32](./images/ss32.png)
 
 #### Answer: 192.168.250.20
 
@@ -532,7 +532,7 @@ Now that we know the host name, we can modify our SPL query to further hone in o
 index=botsv1 host=we9041srv *.pdf
 ```
 
-![ss39](./botsv1/images/ss39.png)
+![ss39](./images/ss39.png)
 
 Based on the results, it looks like the field `Relative Target Name` contains each pdf file name, so we can build the SPL query below to distincity count the `Relative Target Name` field. Running the SPL query below shows us that there were 258 distinct values for the `Relative Target Name` field.
 
@@ -541,7 +541,7 @@ index=botsv1 sourcetype="WinEventLog:Security" host=we9041srv *.pdf Source_Addre
 | stats dc(Relative_Target_Name) as totalcount
 ```
 
-![ss40](./botsv1/images/ss40.png)
+![ss40](./images/ss40.png)
 
 #### Answer: 257 (?)
 
@@ -560,7 +560,7 @@ index=botsv1 sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" ho
 | table ParentProcessId
 ```
 
-![ss41](./botsv1/images/ss41.png)
+![ss41](./images/ss41.png)
 
 #### Answer: 3968
 
@@ -576,7 +576,7 @@ To figure this out, we'll need to pivot back to the Windows Sysmon sourcetype an
 index=botsv1 sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" host=we8105desk
 ```
 
-![ss34](./botsv1/images/ss34.png)
+![ss34](./images/ss34.png)
 
 Right away, the top value is of interest to us as it appears to give a hint as to what Bob's file directory paths look like. We'll want to locate all .txt files within Bob's machines, and we can represent this with `TargetFilename="C:\\Users\\bob.smith.WAYNECORPINC\\*\\*.txt`" in our SPL query. Notice the wildcard * placed to represent any subdirectories and any filename preceding the .txt extension. Further, we'll pipe in `| stats dc(TargetFilename)` to count the unique matches (each unique file) and display the result as a table.
 
@@ -587,7 +587,7 @@ Right away, the top value is of interest to us as it appears to give a hint as t
 index=botsv1 sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" host=we8105desk TargetFilename="C:\\Users\\bob.smith.WAYNECORPINC*\\*.txt"
 | stats dc(TargetFilename)
 ```
-![ss33](./botsv1/images/ss33.png)
+![ss33](./images/ss33.png)
 
 #### Answer: 406
 
@@ -601,7 +601,7 @@ For this question we'll pivot back to `suricata` for sourcetype. We know that th
 index=botsv1 sourcetype=suricata src_ip="192.168.250.100" solidaritedeproximite.org
 ```
 
-![ss35](./botsv1/images/ss35.png)
+![ss35](./images/ss35.png)
 
 
 We see that there's one file called `mhtr.jpg`. Seeing that it's associated with the unusual domain, this is likely the file containing the ransomware cryptor code.
