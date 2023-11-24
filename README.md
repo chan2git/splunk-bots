@@ -6,5 +6,5 @@
  
  # Walkthroughs
  
- - [Splunk BOTSv1](https://github.com/chan2git/splunk-bots/tree/main/botsv1) (completed)
- - [Splunk BOTSv2](https://github.com/chan2git/splunk-bots/tree/main/botsv2) (in-progress)
+ - [Splunk BOTSv1](https://github.com/chan2git/splunk-bots/tree/main/botsv1) (completed) :white_check_mark:
+ - [Splunk BOTSv2](https://github.com/chan2git/splunk-bots/tree/main/botsv2) (in-progress) :soon:
