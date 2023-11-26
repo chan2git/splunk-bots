@@ -103,6 +103,16 @@ After sifting through the raw data, we've identified that the CEO's full name is
 **Answer: Martin Berk**
 
 
+### Q4: What is the CEO's email address?
+
+See solution to Q3.
+
+**Answer: mberk@berkbeer.com** 
+
+### Q5: After the initial contact with the CEO, Amber contacted another employee at this competitor. What is that employee's email address?
+
+
+
 
 
 
