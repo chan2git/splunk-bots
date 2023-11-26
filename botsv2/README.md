@@ -13,6 +13,16 @@ This Splunk BOTS recap and walkthrough is based on the Version 2 (2017) event. Y
 
     * Q3: What is the CEO's name? Provide the first and last name.
 
+    * Q4: What is the CEO's email address?
+
+    * Q5: After the initial contact with the CEO, Amber contacted another employee at this competitor. What is that employee's email address?
+
+    * Q6: What is the name of the file attachment that Amber sent to a contact at the competitor?
+
+    * Q7: What is Amber's personal email address?
+
+
+
 * 200 Series Questions
 * 300 Series Questions
 * 400 Series Questions
@@ -94,7 +104,7 @@ Examining the single result we get back, we can identify the CEO's email, but it
 
 ![Q3_4](./images/Q3_4.png)
 
-If we try to view as raw data for this result, we can try to see if there's any content in the raw data that would provide the first/last name. We know it probably starts with an M so we can keep that in mind. Ctrl+F `berk`` or ctrl+F `mberk@berkbeer.com` and cycling through all the results is likely the best way to sift through the raw data to identify the first/last name within approximate location of the name berk or the email.
+If we try to view as raw data for this result, we can try to see if there's any content in the raw data that would provide the first/last name. We know it probably starts with an M so we can keep that in mind. Ctrl+F `berk` or ctrl+F `mberk@berkbeer.com` and cycling through all the results is likely the best way to sift through the raw data to identify the first/last name within approximate location of the name berk or the email.
 
 After sifting through the raw data, we've identified that the CEO's full name is Martin Berk.
 
@@ -107,12 +117,47 @@ After sifting through the raw data, we've identified that the CEO's full name is
 
 See solution to Q3.
 
-**Answer: mberk@berkbeer.com** 
+**Answer: mberk@berkbeer[.]com** 
 
 ### Q5: After the initial contact with the CEO, Amber contacted another employee at this competitor. What is that employee's email address?
 
+From prior solutions, we learned that Berk Beer is the competitor company and that their email domain is `@berkbeer.com`. Using this information, we can build the below SPL query to search through the sourcetype `stream:smtp` for any events that match Amber's email with the email domain of `@berkbeer`. We know one of the events should be Amber's email with the CEO.
+
+```
+index="botsv2" sourcetype="stream:smtp" aturing@froth.ly berk
+```
+
+![Q5_1](./images/Q5_1.png)
+
+When examining the events, we can see that there is the field `receiver_email` with the value of `hbernhard@berkbeer.com`, which appears to be the employee's email.
+
+![Q5_2](./images/Q5_2.png)
+
+**Answer: hbernhard@berkbeer[.]com**
 
 
+
+### Q6: After the initial contact with the CEO, Amber contacted another employee at this competitor. What is that employee's email address?
+
+See solution to Q5.
+
+When examining the event data associated to `hbernhard@berkbeer.com`, we see that there is the field `attach_filename` with the value of `Saccharomyces_cerevisiae_patent.docx`, which appears to be the name of the file attachment.
+
+**Answer: Saccharomyces_cerevisiae_patent.docx**
+
+
+
+### Q7: What is Amber's personal email address?
+
+When reading the raw data or viewing the values for the field `content_body`, we see what appears to be an encoded message. Interestingly enough, if we expand and view the values for the field `content_transfer_encoding`, it has a value of `base64`. Based on this information, we can copy the value from `content_body` and paste it into https://gchq.github.io/CyberChef and use the **From Base64** recipe.
+
+![Q7_1](./images/Q7_1.png)
+
+![Q7_2](./images/Q7_2.png)
+
+After pasting in the encoded string into the Input box, we can see under the Output box the email conversation thread in cleartext where Amber's personal email is `ambersthebest@yeastiebeastie.com`. Yikes, looks like there's a potential insider threat/risk situation on our hands.
+
+**Answer: ambersthebest@yeastiebeastie[.]com**
 
 
 
