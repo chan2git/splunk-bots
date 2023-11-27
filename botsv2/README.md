@@ -26,9 +26,9 @@ This Splunk BOTS recap and walkthrough is based on the Version 2 (2017) event. Y
 * 200 Series Questions
     * Q200-1: What version of TOR Browser did Amber install to obfuscate her web browsing? Answer guidance: Numeric with one or more delimiter.
 
-    * Q200-2: What is the public IPv4 address of the server running www.brewertalk.com?
+    * Q200-2: What is the public IPv4 address of the server running www.brewertalk[.]com?
 
-    * Q200-3: Provide the IP address of the system used to run a web vulnerability scan against www.brewertalk.com.
+    * Q200-3: Provide the IP address of the system used to run a web vulnerability scan against www.brewertalk[.]com.
 
     * Q200-4: The IP address from Q#2 is also being used by a likely different piece of software to attack a URI path. What is the URI path? Answer guidance: Include the leading forward slash in your answer. Do not include the query string or other parts of the URI. Answer example: /phpinfo.php
 
@@ -198,12 +198,12 @@ If we examine the Interesting Fields section, we see that there is a field calle
 **Answer: 7.0.4**
 
 
-### Q2: What is the public IPv4 address of the server running www.brewertalk.com?
+### Q200-2: What is the public IPv4 address of the server running www.brewertalk[.]com?
 
-Technically, you could run a `dig` command against the domain www.brewertalk.com to query it's DNS information. However, there is the chance that the public IP address has since changed or has been updated.
+Technically, you could run a `dig` command against the domain www.brewertalk[.]com to query it's DNS information. However, there is the chance that the public IP address has since changed or has been updated.
 
 
-Instead, we can likely find this information within the sourcetype `stream:http` and build a SPL query that looks for events related to www.brewertalk.com and filters for destination ports equal to 80 or 443 (as expected for a web server). Additionally, we'll add in the splunk command `stats count by dest_ip` to see if there is one particular IP address that stands out with a substantial amount of events.
+Instead, we can likely find this information within the sourcetype `stream:http` and build a SPL query that looks for events related to www.brewertalk[.]com and filters for destination ports equal to 80 or 443 (as expected for a web server). Additionally, we'll add in the splunk command `stats count by dest_ip` to see if there is one particular IP address that stands out with a substantial amount of events.
 
 ```
 index="botsv2" sourcetype="stream:http" www.brewertalk.com (dest_port=80 OR dest_port=443)
@@ -212,7 +212,7 @@ index="botsv2" sourcetype="stream:http" www.brewertalk.com (dest_port=80 OR dest
 
 ![Q200-2_1](./images/Q200-2_1.png)
 
-Right away, we see that 172.31.4.249 has a really high count number, but this address is in the private address space so we know this cannot be the answer. The only other address is a public IP address, which is likely the public address of the server running www.brewertalk.com.
+Right away, we see that 172.31.4.249 has a really high count number, but this address is in the private address space so we know this cannot be the answer. The only other address is a public IP address, which is likely the public address of the server running www.brewertalk[.]com.
 
 **Answer: 52.42.208.228**
 
