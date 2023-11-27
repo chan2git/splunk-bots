@@ -7,23 +7,40 @@ This Splunk BOTS recap and walkthrough is based on the Version 2 (2017) event. Y
 
 * 100 Series Questions
 
-    * Q1: Amber Turing was hoping for Frothly to be acquired by a potential competitor which fell through, but visited their website to find contact information for their executive team. What is the website domain that she visited?
+    * Q100-1: Amber Turing was hoping for Frothly to be acquired by a potential competitor which fell through, but visited their website to find contact information for their executive team. What is the website domain that she visited?
 
-    * Q2: Amber found the executive contact information and sent him an email. What image file displayed the executive's contact information? Answer example: /path/image.ext
+    * Q100-2: Amber found the executive contact information and sent him an email. What image file displayed the executive's contact information? Answer example: /path/image.ext
 
-    * Q3: What is the CEO's name? Provide the first and last name.
+    * Q100-3: What is the CEO's name? Provide the first and last name.
 
-    * Q4: What is the CEO's email address?
+    * Q100-4: What is the CEO's email address?
 
-    * Q5: After the initial contact with the CEO, Amber contacted another employee at this competitor. What is that employee's email address?
+    * Q100-5: After the initial contact with the CEO, Amber contacted another employee at this competitor. What is that employee's email address?
 
-    * Q6: What is the name of the file attachment that Amber sent to a contact at the competitor?
+    * Q100-6: What is the name of the file attachment that Amber sent to a contact at the competitor?
 
-    * Q7: What is Amber's personal email address?
+    * Q100-7: What is Amber's personal email address?
 
 
 
 * 200 Series Questions
+    * Q200-1: What version of TOR Browser did Amber install to obfuscate her web browsing? Answer guidance: Numeric with one or more delimiter.
+
+    * Q200-2: What is the public IPv4 address of the server running www.brewertalk.com?
+
+    * Q200-3: Provide the IP address of the system used to run a web vulnerability scan against www.brewertalk.com.
+
+    * Q200-4: The IP address from Q#2 is also being used by a likely different piece of software to attack a URI path. What is the URI path? Answer guidance: Include the leading forward slash in your answer. Do not include the query string or other parts of the URI. Answer example: /phpinfo.php
+
+    * Q200-5: What SQL function is being abused on the URI path from the previous question?
+
+    * Q200-6: What was the value of the cookie that Kevin's browser transmitted to the malicious URL as part of an XSS attack? Answer guidance: All digits. Not the cookie name or symbols like an equal sign.
+
+    * Q200-7: What was the value of the cookie that Kevin's browser transmitted to the malicious URL as part of an XSS attack? Answer guidance: All digits. Not the cookie name or symbols like an equal sign.
+
+
+
+
 * 300 Series Questions
 * 400 Series Questions
 
@@ -31,7 +48,7 @@ This Splunk BOTS recap and walkthrough is based on the Version 2 (2017) event. Y
 
 ## 100 Series Questions
 
-### Q1: Amber Turing was hoping for Frothly to be acquired by a potential competitor which fell through, but visited their website to find contact information for their executive team. What is the website domain that she visited?
+### Q100-1: Amber Turing was hoping for Frothly to be acquired by a potential competitor which fell through, but visited their website to find contact information for their executive team. What is the website domain that she visited?
 
 To see a list of websites Amber visited, we'd need to narrow in on Amber's IP address within the sourcetype `stream:http`. We can identify Amber's IP address by running the SPL command below with Amber's name to see if there are results associated with a particular IP address.
 
@@ -61,7 +78,7 @@ We are then presented with a table of 107 different values. We know that Amber's
 ![Q1_3](./images/Q1_3.png)
 
 
-### Q2: Amber found the executive contact information and sent him an email. What image file displayed the executive's contact information? Answer example: /path/image.ext
+### Q100-2: Amber found the executive contact information and sent him an email. What image file displayed the executive's contact information? Answer example: /path/image.ext
 
 Now that we know what the site is, we can run the below SPL query and take a closer look at the values for the field `url_path`.
 
@@ -78,7 +95,7 @@ When examining the values for `url_path`, we can keep in mind for any possible p
 **Answer: /images/ceoberk.png**
 
 
-### Q3: What is the CEO's name? Provide the first and last name.
+### Q100-3: What is the CEO's name? Provide the first and last name.
 
 We know that "ceoberk" might hint that berk is part of the name and will keep this in mind. We could determine first and last name information from email traffic/data derived from sourcetype `stream:smtp`. But before anything we'll need to find Amber's email. We can use the below SPL query and see if there are any interesting field/values that might give a clue as to what Amber's email is.
 
@@ -113,13 +130,13 @@ After sifting through the raw data, we've identified that the CEO's full name is
 **Answer: Martin Berk**
 
 
-### Q4: What is the CEO's email address?
+### Q100-4: What is the CEO's email address?
 
 See solution to Q3.
 
 **Answer: mberk@berkbeer[.]com** 
 
-### Q5: After the initial contact with the CEO, Amber contacted another employee at this competitor. What is that employee's email address?
+### Q100-5: After the initial contact with the CEO, Amber contacted another employee at this competitor. What is that employee's email address?
 
 From prior solutions, we learned that Berk Beer is the competitor company and that their email domain is `@berkbeer.com`. Using this information, we can build the below SPL query to search through the sourcetype `stream:smtp` for any events that match Amber's email with the email domain of `@berkbeer`. We know one of the events should be Amber's email with the CEO.
 
@@ -137,7 +154,7 @@ When examining the events, we can see that there is the field `receiver_email` w
 
 
 
-### Q6: After the initial contact with the CEO, Amber contacted another employee at this competitor. What is that employee's email address?
+### Q100-6: After the initial contact with the CEO, Amber contacted another employee at this competitor. What is that employee's email address?
 
 See solution to Q5.
 
@@ -147,7 +164,7 @@ When examining the event data associated to `hbernhard@berkbeer.com`, we see tha
 
 
 
-### Q7: What is Amber's personal email address?
+### Q100-7: What is Amber's personal email address?
 
 When reading the raw data or viewing the values for the field `content_body`, we see what appears to be an encoded message. Interestingly enough, if we expand and view the values for the field `content_transfer_encoding`, it has a value of `base64`. Based on this information, we can copy the value from `content_body` and paste it into https://gchq.github.io/CyberChef and use the **From Base64** recipe.
 
@@ -162,6 +179,42 @@ After pasting in the encoded string into the Input box, we can see under the Out
 
 
 ## 200 Series Questions
+
+### Q200-1: What version of TOR Browser did Amber install to obfuscate her web browsing? Answer guidance: Numeric with one or more delimiter.
+
+We can build the generic SPL query below to check for events matching both `tor` (the browser application we're interested in) and `amber` (Amber's host machine likely has directories that is inclusive of her name). There are over 300 events that match our query. 
+
+```
+index="botsv2" tor amber
+```
+
+![Q200-1_1](./images/Q200-1_1.png)
+
+If we examine the Interesting Fields section, we see that there is a field called `Image`. Typically, images may contain information of a specific version/firmware of a particular application. If we expand the field `Image`, we can see that there is a value that references a TOR install as 7.0.4, which is likely the version of the TOR browser Amber installed.
+
+
+![Q200-1_2](./images/Q200-1_2.png)
+
+**Answer: 7.0.4**
+
+
+### Q2: What is the public IPv4 address of the server running www.brewertalk.com?
+
+Technically, you could run a `dig` command against the domain www.brewertalk.com to query it's DNS information. However, there is the chance that the public IP address has since changed or has been updated.
+
+
+Instead, we can likely find this information within the sourcetype `stream:http` and build a SPL query that looks for events related to www.brewertalk.com and filters for destination ports equal to 80 or 443 (as expected for a web server). Additionally, we'll add in the splunk command `stats count by dest_ip` to see if there is one particular IP address that stands out with a substantial amount of events.
+
+```
+index="botsv2" sourcetype="stream:http" www.brewertalk.com (dest_port=80 OR dest_port=443)
+| stats count by dest_ip
+```
+
+![Q200-2_1](./images/Q200-2_1.png)
+
+Right away, we see that 172.31.4.249 has a really high count number, but this address is in the private address space so we know this cannot be the answer. The only other address is a public IP address, which is likely the public address of the server running www.brewertalk.com.
+
+**Answer: 52.42.208.228**
 
 
 
