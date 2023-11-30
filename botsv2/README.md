@@ -200,10 +200,7 @@ If we examine the Interesting Fields section, we see that there is a field calle
 
 ### Q200-2: What is the public IPv4 address of the server running www.brewertalk[.]com?
 
-Technically, you could run a `dig` command against the domain www.brewertalk[.]com to query it's DNS information. However, there is the chance that the public IP address has since changed or has been updated.
-
-
-Instead, we can likely find this information within the sourcetype `stream:http` and build a SPL query that looks for events related to www.brewertalk[.]com and filters for destination ports equal to 80 or 443 (as expected for a web server). Additionally, we'll add in the splunk command `stats count by dest_ip` to see if there is one particular IP address that stands out with a substantial amount of events.
+We can likely find this information within the sourcetype `stream:http` and build a SPL query that looks for events related to www.brewertalk[.]com and filters for destination ports equal to 80 or 443 (as expected for a web server). Additionally, we'll add in the splunk command `stats count by dest_ip` to see if there is one particular IP address that stands out with a substantial amount of events.
 
 ```
 index="botsv2" sourcetype="stream:http" www.brewertalk.com (dest_port=80 OR dest_port=443)
@@ -215,6 +212,92 @@ index="botsv2" sourcetype="stream:http" www.brewertalk.com (dest_port=80 OR dest
 Right away, we see that 172.31.4.249 has a really high count number, but this address is in the private address space so we know this cannot be the answer. The only other address is a public IP address, which is likely the public address of the server running www.brewertalk[.]com.
 
 **Answer: 52.42.208.228**
+
+
+### Q200-3: Provide the IP address of the system used to run a web vulnerability scan against www.brewertalk.com.
+
+We can can reasonably assume that the IP address conducting the web vulnerability scan will likely have a substantial amount of hits from web crawling, port scanning, etc. We can build the below SPL query and see if there are any IP addresses that stand out.
+
+```
+index="botsv2" sourcetype="stream:http" www.brewertalk.com
+| top src_ip
+```
+
+![Q200-3_1](./images/Q200-3_1.png)
+
+Right away, we see that the IP address `45.77.65.211` has a substantial amount of hits and represents approximately 90% of source IPs. This is likely the IP address that is conducting web vulnerability scanning activity.
+
+**Answer: 45.77.65.211**
+
+
+### Q200-4: The IP address from Q#2 is also being used by a likely different piece of software to attack a URI path. What is the URI path?
+
+We can build the below SPL query and include the `top` command applied to the field `uri_path`. We can reasonably assume that that perhaps there may be some sort of fuzzing attack going on or perhaps some sort of injection attack, and so this specific URI path may have a lot of hits/requests coming from this IP address.
+
+```
+index="botsv2" sourcetype="stream:http" www.brewertalk.com src_ip="45.77.65.211"
+| top uri_path
+```
+
+![Q200_4-1](./images/Q200_4-1.png)
+
+
+
+
+
+Th `top` command reveals to us the top 10 values with the most counts. We see two paths that catch our eyes: `/member.php` and `/search.php`. However, `/member.php` has a substantially higher count, therefore likely being under attacked in some way.
+
+**Answer: /member.php**
+
+
+### Q200-5: What SQL function is being abused on the URI path from the previous question?
+
+Now that we know that the URL path of `/member.php` is being attacked, we can build the below SPL query to put into the table the unique values from the `form_data` field, which will likely house the SQL injection string.
+
+```
+index="botsv2" sourcetype="stream:http" www.brewertalk.com src_ip="45.77.65.211" uri_path="/member.php"
+| table form_data
+| dedup form_data
+```
+
+![Q200_5-1](./images/Q200_5-1.png)
+
+Based on the strings observed, it looks like there is a SQL function of `updatexml`, which is used to modify data within an XML document stored inside of the SQL database.
+
+**Answer: updatexml**
+
+### Q200-6: What was the value of the cookie that Kevin's browser transmitted to the malicious URL as part of an XSS attack? Answer guidance: All digits. Not the cookie name or symbols like an equal sign.
+
+We can build the below query to include the general keywords `www.brewertalk.com` and `kevin` and apply a `table` command to the field `cookie` and see if anything interesting pops up.
+
+```
+index="botsv2" sourcetype="stream:http" www.brewertalk.com kevin
+| table cookie
+```
+
+![Q200-6_1](./images/Q200-6_1.png)
+
+
+We notice that there seems to be the cookie value of `1502408189` associated with multiple potential login attempts.
+
+**Answer: 1502408189**
+
+
+
+### Q200-6: What brewertalk.com username was maliciously created by a spear phishing attack?
+
+We can modify the prior question's SPL query to simply review the `table` command to view events. We'll notice that some of the events have some Javascript strings, which may provide insight into what the brewertalk username was used in these attacks. If we ctrl+f `username`, we can see that there is a username referenced as kIagerfield.
+
+```
+index="botsv2" sourcetype="stream:http" www.brewertalk.com kevin
+```
+![Q200-7_1](./images/Q200-7_1.png)
+
+
+![Q200-7_1](./images/Q200-7_2.png)
+
+**Answer: kIagerfield**
+
 
 
 
