@@ -303,6 +303,76 @@ index="botsv2" sourcetype="stream:http" www.brewertalk.com kevin
 
 ## 300 Series Questions
 
+### Q300-1: Mallory's critical PowerPoint presentation on her MacBook gets encrypted by ransomware on August 18. What is the name of this file after it was encrypted?
+
+First, let's see if we can identify the Mallory's hostname by running the simple SPL query below and checking the values for the field `host` in a easy to read table.
+
+```
+index="botsv2" mallory
+| table host
+| dedup host
+```
+
+![Q300-1_1](./images/Q300-1_1.png)
+
+The value `MACLORY-AIR13` seems to be Mallory's hostname, a play on "Macbook Air 13" and Mallory. 
+
+The question states that Mallory's PowerPoint presentation was encrypted - so we know that we are searching for files with the possible file extensions of .pptx, .pptm, and/or .ppt. We can put this all together into a SPL query below and see if we find any interesting results around August 18.
+
+```
+index="botsv2" host="MACLORY-AIR13" (*.pptx OR *.pptm OR *.ppt)
+```
+![Q300-1_2](./images/Q300-1_2.png)
+
+Interestingly, on 08/19/2017 we see that there's a file called `Frothly_marketing_campaign_Q317.pptx.crypt`, which is likely the name of Mallory's PowerPoint file after it became encrypted.
+
+**Answer: Frothly_marketing_campaign_Q317.pptx.crypt**
+
+
+### Q300-2: There is a Games of Thrones movie file that was encrypted as well. What season and episode is it? 
+
+This should be a relatively straightforward query. We know that the Game of Thrones movie file is on Mallory's host machine and that the encrypted files have a `.crypt` file extension. We can reasonably assume that the file name probably contains some variation of the string "GOT" or "Game of Thrones". Adding `(GOT OR *Thrones)` should capture most of the possible naming conventions one can expect for this Game of Thrones file.
+
+```
+index="botsv2" host="MACLORY-AIR13" *.crypt (GOT OR *Thrones")
+```
+
+![Q300-2_1](./images/Q300-2_1.png)
+
+When viewing the events, we see that there is a file named "GoT.S07E02.BOTS.BOTS.BOTS.mkv.crypt". "GOT" stands for Game of Thrones. S07E02 stands for Season 07 Episode 02. .mkv is a movie/video media file extension. .crypt is the file extension we've observed for the encrypted files. This is the movie file that was encrypted.
+
+**Answer: S07E02**
+
+
+### Q300-3: Kevin Lagerfield used a USB drive to move malware onto kutekitten, Mallory's personal MacBook. She ran the malware, which obfuscates itself during execution. Provide the vendor name of the USB drive Kevin likely used.
+
+We can try to run the general SPL query below and see if we can find anything interesting or any additional information to help refine our search.
+
+```
+index="botsv2" kutekitten usb vendor
+```
+![Q300-3_1](./images/Q300-3_1.png)
+
+![Q300-3_2](./images/Q300-3_2.png)
+
+If we expand the `columns` field within our events, we're presented with additional fields; interestingly one is named `vendor_id` and our events show us two distinct values: `058f` and `13fe`. When we search these two vendor IDs up, we get Alcor Micro Corp and Phison Electronics Corp. Based on the answer formatting, the answer is Alcor Micro Corp.
+
+
+![Q300-3_3](./images/Q300-3_3.png)
+
+![Q300-3_4](./images/Q300-3_4.png)
+
+**Answer: Alcor Micro Corp**
+
+
+### Q300-5:
+
+
+
+
+
+
+
 
 
 ## 400 Series Questions
