@@ -5,73 +5,72 @@ This Splunk BOTS recap and walkthrough is based on the Version 2 (2017) event. Y
 
 ## Table of Contents
 
-* 100 Series Questions
+* [100 Series Questions](https://github.com/chan2git/splunk-bots/tree/main/botsv2#100-series-questions)
 
-    * Q101: Amber Turing was hoping for Frothly to be acquired by a potential competitor which fell through, but visited their website to find contact information for their executive team. What is the website domain that she visited?
+    * [Q101: Amber Turing was hoping for Frothly to be acquired by a potential competitor which fell through, but visited their website to find contact information for their executive team. What is the website domain that she visited?](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q101-amber-turing-was-hoping-for-frothly-to-be-acquired-by-a-potential-competitor-which-fell-through-but-visited-their-website-to-find-contact-information-for-their-executive-team-what-is-the-website-domain-that-she-visited)
 
-    * Q102: Amber found the executive contact information and sent him an email. What image file displayed the executive's contact information? Answer example: /path/image.ext
+    * [Q102: Amber found the executive contact information and sent him an email. What image file displayed the executive's contact information? Answer example: /path/image.ext](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q101-amber-turing-was-hoping-for-frothly-to-be-acquired-by-a-potential-competitor-which-fell-through-but-visited-their-website-to-find-contact-information-for-their-executive-team-what-is-the-website-domain-that-she-visited)
 
-    * Q103: What is the CEO's name? Provide the first and last name.
+    * [Q103: What is the CEO's name? Provide the first and last name.](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q103-what-is-the-ceos-name-provide-the-first-and-last-name)
 
-    * Q104: What is the CEO's email address?
+    * [Q104: What is the CEO's email address?](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q104-what-is-the-ceos-email-address)
 
-    * Q105: After the initial contact with the CEO, Amber contacted another employee at this competitor. What is that employee's email address?
+    * [Q105: After the initial contact with the CEO, Amber contacted another employee at this competitor. What is that employee's email address?](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q103-what-is-the-ceos-name-provide-the-first-and-last-name_)
 
-    * Q106: What is the name of the file attachment that Amber sent to a contact at the competitor?
+    * [Q106: What is the name of the file attachment that Amber sent to a contact at the competitor?](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q106-after-the-initial-contact-with-the-ceo-amber-contacted-another-employee-at-this-competitor-what-is-that-employees-email-address)
 
-    * Q107: What is Amber's personal email address?
-
-
-
-* 200 Series Questions
-    * Q201: What version of TOR Browser did Amber install to obfuscate her web browsing? Answer guidance: Numeric with one or more delimiter.
-
-    * Q202: What is the public IPv4 address of the server running www.brewertalk[.]com?
-
-    * Q203: Provide the IP address of the system used to run a web vulnerability scan against www.brewertalk[.]com.
-
-    * Q204: The IP address from Q#2 is also being used by a likely different piece of software to attack a URI path. What is the URI path? Answer guidance: Include the leading forward slash in your answer. Do not include the query string or other parts of the URI. Answer example: /phpinfo.php
-
-    * Q205: What SQL function is being abused on the URI path from the previous question?
-
-    * Q206: What was the value of the cookie that Kevin's browser transmitted to the malicious URL as part of an XSS attack? Answer guidance: All digits. Not the cookie name or symbols like an equal sign.
-
-    * Q207: What was the value of the cookie that Kevin's browser transmitted to the malicious URL as part of an XSS attack? Answer guidance: All digits. Not the cookie name or symbols like an equal sign.
-
-
-* 300 Series Questions
-
-    * Q301: Mallory's critical PowerPoint presentation on her MacBook gets encrypted by ransomware on August 18. What is the name of this file after it was encrypted?
-
-    * Q302: There is a Games of Thrones movie file that was encrypted as well. What season and episode is it? 
-
-    * Q303: Kevin Lagerfield used a USB drive to move malware onto kutekitten, Mallory's personal MacBook. She ran the malware, which obfuscates itself during execution. Provide the vendor name of the USB drive Kevin likely used. Answer Guidance: Use time correlation to identify the USB drive.
-
-    * Q304: What programming language is at least part of the malware from the question above written in?
-
-    * Q305: When was this malware first seen in the wild? Answer Guidance: YYYY-MM-DD
-
-    * Q306: When was this malware first seen in the wild? Answer Guidance: YYYY-MM-DD
-
-    * Q307: When was this malware first seen in the wild? Answer Guidance: YYYY-MM-DD
+    * [Q107: What is Amber's personal email address?](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q107-what-is-ambers-personal-email-address)
 
 
 
-* 400 Series Questions
+* [200 Series Questions](https://github.com/chan2git/splunk-bots/tree/main/botsv2#200-series-questions)
 
-    * Q401: A Federal law enforcement agency reports that Taedonggang often spear phishes its victims with zip files that have to be opened with a password. What is the name of the attachment sent to Frothly by a malicious Taedonggang actor?
+    * [Q201: What version of TOR Browser did Amber install to obfuscate her web browsing? Answer guidance: Numeric with one or more delimiter.](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q201-what-version-of-tor-browser-did-amber-install-to-obfuscate-her-web-browsing-answer-guidance-numeric-with-one-or-more-delimiter)
 
-    * Q402:What is the password to open the zip file?
+    * [Q202: What is the public IPv4 address of the server running www.brewertalk[.]com?](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q201-what-version-of-tor-browser-did-amber-install-to-obfuscate-her-web-browsing-answer-guidance-numeric-with-one-or-more-delimiter)
 
-    * Q403: The Taedonggang APT group encrypts most of their traffic with SSL. What is the "SSL Issuer" that they use for the majority of their traffic? Answer guidance: Copy the field exactly, including spaces.
+    * [Q203: Provide the IP address of the system used to run a web vulnerability scan against www.brewertalk[.]com.](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q203-provide-the-ip-address-of-the-system-used-to-run-a-web-vulnerability-scan-against-wwwbrewertalkcom)
 
-    * Q404: What unusual file (for an American company) does winsys32.dll cause to be downloaded into the Frothly environment?
+    * [Q204: The IP address from Q#2 is also being used by a likely different piece of software to attack a URI path. What is the URI path? Answer guidance: Include the leading forward slash in your answer. Do not include the query string or other parts of the URI. Answer example: /phpinfo.php](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q204-the-ip-address-from-q2-is-also-being-used-by-a-likely-different-piece-of-software-to-attack-a-uri-path-what-is-the-uri-path)
 
-    * 4305: What is the first and last name of the poor innocent sap who was implicated in the metadata of the file that executed PowerShell Empire on the first victim's workstation? Answer example: John Smith
+    * [Q205: What SQL function is being abused on the URI path from the previous question?](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q205-what-sql-function-is-being-abused-on-the-uri-path-from-the-previous-question)
 
-    * Q406: Within the document, what kind of points is mentioned if you found the text?
+    * [Q206: What was the value of the cookie that Kevin's browser transmitted to the malicious URL as part of an XSS attack? Answer guidance: All digits. Not the cookie name or symbols like an equal sign.](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q206-what-was-the-value-of-the-cookie-that-kevins-browser-transmitted-to-the-malicious-url-as-part-of-an-xss-attack-answer-guidance-all-digits-not-the-cookie-name-or-symbols-like-an-equal-sign)
 
-    * Q407: To maintain persistence in the Frothly network, Taedonggang APT configured several Scheduled Tasks to beacon back to their C2 server. What single webpage is most contacted by these Scheduled Tasks? Answer example: index.php or images.html
+    * [Q207: What was the value of the cookie that Kevin's browser transmitted to the malicious URL as part of an XSS attack? Answer guidance: All digits. Not the cookie name or symbols like an equal sign.](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q207-what-brewertalkcom-username-was-maliciously-created-by-a-spear-phishing-attack)
+
+
+* [300 Series Questions](https://github.com/chan2git/splunk-bots/tree/main/botsv2#300-series-questions)
+
+    * [Q301: Mallory's critical PowerPoint presentation on her MacBook gets encrypted by ransomware on August 18. What is the name of this file after it was encrypted?](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q207-what-brewertalkcom-username-was-maliciously-created-by-a-spear-phishing-attack)
+
+    * [Q302: There is a Games of Thrones movie file that was encrypted as well. What season and episode is it?](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q302-there-is-a-games-of-thrones-movie-file-that-was-encrypted-as-well-what-season-and-episode-is-it)
+
+    * [Q303: Kevin Lagerfield used a USB drive to move malware onto kutekitten, Mallory's personal MacBook. She ran the malware, which obfuscates itself during execution. Provide the vendor name of the USB drive Kevin likely used. Answer Guidance: Use time correlation to identify the USB drive.](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q303-kevin-lagerfield-used-a-usb-drive-to-move-malware-onto-kutekitten-mallorys-personal-macbook-she-ran-the-malware-which-obfuscates-itself-during-execution-provide-the-vendor-name-of-the-usb-drive-kevin-likely-used)
+
+    * [Q304: What programming language is at least part of the malware from the question above written in?](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q304-what-programming-language-is-at-least-part-of-the-malware-from-the-question-above-written-in)
+
+    * [Q305: When was this malware first seen in the wild?](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q304-what-programming-language-is-at-least-part-of-the-malware-from-the-question-above-written-in)
+
+    * [Q306: The malware infecting kutekitten uses dynamic DNS destinations to communicate with two C&C servers shortly after installation. What is the fully-qualified domain name (FQDN) of the first (alphabetically) of these destinations?D](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q306-the-malware-infecting-kutekitten-uses-dynamic-dns-destinations-to-communicate-with-two-cc-servers-shortly-after-installation-what-is-the-fully-qualified-domain-name-fqdn-of-the-first-alphabetically-of-these-destinations)
+
+    * [Q307: From the question above, what is the fully-qualified domain name (FQDN) of the second (alphabetically) contacted C&C server?](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q307-from-the-question-above-what-is-the-fully-qualified-domain-name-fqdn-of-the-second-alphabetically-contacted-cc-server)
+
+
+
+* [400 Series Questions](https://github.com/chan2git/splunk-bots/tree/main/botsv2#400-series-questions)
+
+    * [Q401: A Federal law enforcement agency reports that Taedonggang often spear phishes its victims with zip files that have to be opened with a password. What is the name of the attachment sent to Frothly by a malicious Taedonggang actor?](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q401-a-federal-law-enforcement-agency-reports-that-taedonggang-often-spear-phishes-its-victims-with-zip-files-that-have-to-be-opened-with-a-password-what-is-the-name-of-the-attachment-sent-to-frothly-by-a-malicious-taedonggang-actor)
+
+    * [Q402:What is the password to open the zip file?](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q402-what-is-the-password-to-open-the-zip-file)
+
+    * [Q403: The Taedonggang APT group encrypts most of their traffic with SSL. What is the "SSL Issuer" that they use for the majority of their traffic? Answer guidance: Copy the field exactly, including spaces.](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q403-the-taedonggang-apt-group-encrypts-most-of-their-traffic-with-ssl-what-is-the-ssl-issuer-that-they-use-for-the-majority-of-their-traffic)
+
+    * [Q404: What unusual file (for an American company) does winsys32.dll cause to be downloaded into the Frothly environment?](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q404-what-unusual-file-for-an-american-company-does-winsys32dll-cause-to-be-downloaded-into-the-frothly-environment)
+
+    * [Q405: What is the first and last name of the poor innocent sap who was implicated in the metadata of the file that executed PowerShell Empire on the first victim's workstation? Answer example: John Smith](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q405-what-is-the-first-and-last-name-of-the-poor-innocent-sap-who-was-implicated-in-the-metadata-of-the-file-that-executed-powershell-empire-on-the-first-victims-workstation)
+
+    * [Q406: To maintain persistence in the Frothly network, Taedonggang APT configured several Scheduled Tasks to beacon back to their C2 server. What single webpage is most contacted by these Scheduled Tasks? Answer example: index.php or images.html](https://github.com/chan2git/splunk-bots/tree/main/botsv2#q406-to-maintain-persistence-in-the-frothly-network-taedonggang-apt-configured-several-scheduled-tasks-to-beacon-back-to-their-c2-server-what-single-webpage-is-most-contacted-by-these-scheduled-tasks)
 
 
 
