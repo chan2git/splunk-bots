@@ -7,48 +7,78 @@ This Splunk BOTS recap and walkthrough is based on the Version 2 (2017) event. Y
 
 * 100 Series Questions
 
-    * Q100-1: Amber Turing was hoping for Frothly to be acquired by a potential competitor which fell through, but visited their website to find contact information for their executive team. What is the website domain that she visited?
+    * Q101: Amber Turing was hoping for Frothly to be acquired by a potential competitor which fell through, but visited their website to find contact information for their executive team. What is the website domain that she visited?
 
-    * Q100-2: Amber found the executive contact information and sent him an email. What image file displayed the executive's contact information? Answer example: /path/image.ext
+    * Q102: Amber found the executive contact information and sent him an email. What image file displayed the executive's contact information? Answer example: /path/image.ext
 
-    * Q100-3: What is the CEO's name? Provide the first and last name.
+    * Q103: What is the CEO's name? Provide the first and last name.
 
-    * Q100-4: What is the CEO's email address?
+    * Q104: What is the CEO's email address?
 
-    * Q100-5: After the initial contact with the CEO, Amber contacted another employee at this competitor. What is that employee's email address?
+    * Q105: After the initial contact with the CEO, Amber contacted another employee at this competitor. What is that employee's email address?
 
-    * Q100-6: What is the name of the file attachment that Amber sent to a contact at the competitor?
+    * Q106: What is the name of the file attachment that Amber sent to a contact at the competitor?
 
-    * Q100-7: What is Amber's personal email address?
+    * Q107: What is Amber's personal email address?
 
 
 
 * 200 Series Questions
-    * Q200-1: What version of TOR Browser did Amber install to obfuscate her web browsing? Answer guidance: Numeric with one or more delimiter.
+    * Q201: What version of TOR Browser did Amber install to obfuscate her web browsing? Answer guidance: Numeric with one or more delimiter.
 
-    * Q200-2: What is the public IPv4 address of the server running www.brewertalk[.]com?
+    * Q202: What is the public IPv4 address of the server running www.brewertalk[.]com?
 
-    * Q200-3: Provide the IP address of the system used to run a web vulnerability scan against www.brewertalk[.]com.
+    * Q203: Provide the IP address of the system used to run a web vulnerability scan against www.brewertalk[.]com.
 
-    * Q200-4: The IP address from Q#2 is also being used by a likely different piece of software to attack a URI path. What is the URI path? Answer guidance: Include the leading forward slash in your answer. Do not include the query string or other parts of the URI. Answer example: /phpinfo.php
+    * Q204: The IP address from Q#2 is also being used by a likely different piece of software to attack a URI path. What is the URI path? Answer guidance: Include the leading forward slash in your answer. Do not include the query string or other parts of the URI. Answer example: /phpinfo.php
 
-    * Q200-5: What SQL function is being abused on the URI path from the previous question?
+    * Q205: What SQL function is being abused on the URI path from the previous question?
 
-    * Q200-6: What was the value of the cookie that Kevin's browser transmitted to the malicious URL as part of an XSS attack? Answer guidance: All digits. Not the cookie name or symbols like an equal sign.
+    * Q206: What was the value of the cookie that Kevin's browser transmitted to the malicious URL as part of an XSS attack? Answer guidance: All digits. Not the cookie name or symbols like an equal sign.
 
-    * Q200-7: What was the value of the cookie that Kevin's browser transmitted to the malicious URL as part of an XSS attack? Answer guidance: All digits. Not the cookie name or symbols like an equal sign.
-
-
+    * Q207: What was the value of the cookie that Kevin's browser transmitted to the malicious URL as part of an XSS attack? Answer guidance: All digits. Not the cookie name or symbols like an equal sign.
 
 
 * 300 Series Questions
+
+    * Q301: Mallory's critical PowerPoint presentation on her MacBook gets encrypted by ransomware on August 18. What is the name of this file after it was encrypted?
+
+    * Q302: There is a Games of Thrones movie file that was encrypted as well. What season and episode is it? 
+
+    * Q303: Kevin Lagerfield used a USB drive to move malware onto kutekitten, Mallory's personal MacBook. She ran the malware, which obfuscates itself during execution. Provide the vendor name of the USB drive Kevin likely used. Answer Guidance: Use time correlation to identify the USB drive.
+
+    * Q304: What programming language is at least part of the malware from the question above written in?
+
+    * Q305: When was this malware first seen in the wild? Answer Guidance: YYYY-MM-DD
+
+    * Q306: When was this malware first seen in the wild? Answer Guidance: YYYY-MM-DD
+
+    * Q307: When was this malware first seen in the wild? Answer Guidance: YYYY-MM-DD
+
+
+
 * 400 Series Questions
+
+    * Q401: A Federal law enforcement agency reports that Taedonggang often spear phishes its victims with zip files that have to be opened with a password. What is the name of the attachment sent to Frothly by a malicious Taedonggang actor?
+
+    * Q402:What is the password to open the zip file?
+
+    * Q403: The Taedonggang APT group encrypts most of their traffic with SSL. What is the "SSL Issuer" that they use for the majority of their traffic? Answer guidance: Copy the field exactly, including spaces.
+
+    * Q404: What unusual file (for an American company) does winsys32.dll cause to be downloaded into the Frothly environment?
+
+    * 4305: What is the first and last name of the poor innocent sap who was implicated in the metadata of the file that executed PowerShell Empire on the first victim's workstation? Answer example: John Smith
+
+    * Q406: Within the document, what kind of points is mentioned if you found the text?
+
+    * Q407: To maintain persistence in the Frothly network, Taedonggang APT configured several Scheduled Tasks to beacon back to their C2 server. What single webpage is most contacted by these Scheduled Tasks? Answer example: index.php or images.html
+
 
 
 
 ## 100 Series Questions
 
-### Q100-1: Amber Turing was hoping for Frothly to be acquired by a potential competitor which fell through, but visited their website to find contact information for their executive team. What is the website domain that she visited?
+### Q101: Amber Turing was hoping for Frothly to be acquired by a potential competitor which fell through, but visited their website to find contact information for their executive team. What is the website domain that she visited?
 
 To see a list of websites Amber visited, we'd need to narrow in on Amber's IP address within the sourcetype `stream:http`. We can identify Amber's IP address by running the SPL command below with Amber's name to see if there are results associated with a particular IP address.
 
@@ -78,7 +108,7 @@ We are then presented with a table of 107 different values. We know that Amber's
 ![Q1_3](./images/Q1_3.png)
 
 
-### Q100-2: Amber found the executive contact information and sent him an email. What image file displayed the executive's contact information? Answer example: /path/image.ext
+### Q102: Amber found the executive contact information and sent him an email. What image file displayed the executive's contact information? Answer example: /path/image.ext
 
 Now that we know what the site is, we can run the below SPL query and take a closer look at the values for the field `url_path`.
 
@@ -95,7 +125,7 @@ When examining the values for `url_path`, we can keep in mind for any possible p
 **Answer: /images/ceoberk.png**
 
 
-### Q100-3: What is the CEO's name? Provide the first and last name.
+### Q103: What is the CEO's name? Provide the first and last name.
 
 We know that "ceoberk" might hint that berk is part of the name and will keep this in mind. We could determine first and last name information from email traffic/data derived from sourcetype `stream:smtp`. But before anything we'll need to find Amber's email. We can use the below SPL query and see if there are any interesting field/values that might give a clue as to what Amber's email is.
 
@@ -130,13 +160,13 @@ After sifting through the raw data, we've identified that the CEO's full name is
 **Answer: Martin Berk**
 
 
-### Q100-4: What is the CEO's email address?
+### Q104: What is the CEO's email address?
 
 See solution to Q3.
 
 **Answer: mberk@berkbeer[.]com** 
 
-### Q100-5: After the initial contact with the CEO, Amber contacted another employee at this competitor. What is that employee's email address?
+### Q105: After the initial contact with the CEO, Amber contacted another employee at this competitor. What is that employee's email address?
 
 From prior solutions, we learned that Berk Beer is the competitor company and that their email domain is `@berkbeer.com`. Using this information, we can build the below SPL query to search through the sourcetype `stream:smtp` for any events that match Amber's email with the email domain of `@berkbeer`. We know one of the events should be Amber's email with the CEO.
 
@@ -154,7 +184,7 @@ When examining the events, we can see that there is the field `receiver_email` w
 
 
 
-### Q100-6: After the initial contact with the CEO, Amber contacted another employee at this competitor. What is that employee's email address?
+### Q106: After the initial contact with the CEO, Amber contacted another employee at this competitor. What is that employee's email address?
 
 See solution to Q5.
 
@@ -164,7 +194,7 @@ When examining the event data associated to `hbernhard@berkbeer.com`, we see tha
 
 
 
-### Q100-7: What is Amber's personal email address?
+### Q107: What is Amber's personal email address?
 
 When reading the raw data or viewing the values for the field `content_body`, we see what appears to be an encoded message. Interestingly enough, if we expand and view the values for the field `content_transfer_encoding`, it has a value of `base64`. Based on this information, we can copy the value from `content_body` and paste it into https://gchq.github.io/CyberChef and use the **From Base64** recipe.
 
@@ -180,7 +210,7 @@ After pasting in the encoded string into the Input box, we can see under the Out
 
 ## 200 Series Questions
 
-### Q200-1: What version of TOR Browser did Amber install to obfuscate her web browsing? Answer guidance: Numeric with one or more delimiter.
+### Q201: What version of TOR Browser did Amber install to obfuscate her web browsing? Answer guidance: Numeric with one or more delimiter.
 
 We can build the generic SPL query below to check for events matching both `tor` (the browser application we're interested in) and `amber` (Amber's host machine likely has directories that is inclusive of her name). There are over 300 events that match our query. 
 
@@ -198,7 +228,7 @@ If we examine the Interesting Fields section, we see that there is a field calle
 **Answer: 7.0.4**
 
 
-### Q200-2: What is the public IPv4 address of the server running www.brewertalk[.]com?
+### Q202: What is the public IPv4 address of the server running www.brewertalk[.]com?
 
 We can likely find this information within the sourcetype `stream:http` and build a SPL query that looks for events related to www.brewertalk[.]com and filters for destination ports equal to 80 or 443 (as expected for a web server). Additionally, we'll add in the splunk command `stats count by dest_ip` to see if there is one particular IP address that stands out with a substantial amount of events.
 
@@ -214,7 +244,7 @@ Right away, we see that 172.31.4.249 has a really high count number, but this ad
 **Answer: 52.42.208.228**
 
 
-### Q200-3: Provide the IP address of the system used to run a web vulnerability scan against www.brewertalk.com.
+### Q203: Provide the IP address of the system used to run a web vulnerability scan against www.brewertalk.com.
 
 We can can reasonably assume that the IP address conducting the web vulnerability scan will likely have a substantial amount of hits from web crawling, port scanning, etc. We can build the below SPL query and see if there are any IP addresses that stand out.
 
@@ -230,7 +260,7 @@ Right away, we see that the IP address `45.77.65.211` has a substantial amount o
 **Answer: 45.77.65.211**
 
 
-### Q200-4: The IP address from Q#2 is also being used by a likely different piece of software to attack a URI path. What is the URI path?
+### Q204: The IP address from Q#2 is also being used by a likely different piece of software to attack a URI path. What is the URI path?
 
 We can build the below SPL query and include the `top` command applied to the field `uri_path`. We can reasonably assume that that perhaps there may be some sort of fuzzing attack going on or perhaps some sort of injection attack, and so this specific URI path may have a lot of hits/requests coming from this IP address.
 
@@ -250,7 +280,7 @@ Th `top` command reveals to us the top 10 values with the most counts. We see tw
 **Answer: /member.php**
 
 
-### Q200-5: What SQL function is being abused on the URI path from the previous question?
+### Q205: What SQL function is being abused on the URI path from the previous question?
 
 Now that we know that the URL path of `/member.php` is being attacked, we can build the below SPL query to put into the table the unique values from the `form_data` field, which will likely house the SQL injection string.
 
@@ -266,7 +296,7 @@ Based on the strings observed, it looks like there is a SQL function of `updatex
 
 **Answer: updatexml**
 
-### Q200-6: What was the value of the cookie that Kevin's browser transmitted to the malicious URL as part of an XSS attack? Answer guidance: All digits. Not the cookie name or symbols like an equal sign.
+### Q206: What was the value of the cookie that Kevin's browser transmitted to the malicious URL as part of an XSS attack? Answer guidance: All digits. Not the cookie name or symbols like an equal sign.
 
 We can build the below query to include the general keywords `www.brewertalk.com` and `kevin` and apply a `table` command to the field `cookie` and see if anything interesting pops up.
 
@@ -284,7 +314,7 @@ We notice that there seems to be the cookie value of `1502408189` associated wit
 
 
 
-### Q200-6: What brewertalk.com username was maliciously created by a spear phishing attack?
+### Q207: What brewertalk.com username was maliciously created by a spear phishing attack?
 
 We can modify the prior question's SPL query to simply review the `table` command to view events. We'll notice that some of the events have some Javascript strings, which may provide insight into what the brewertalk username was used in these attacks. If we ctrl+f `username`, we can see that there is a username referenced as kIagerfield.
 
@@ -303,7 +333,7 @@ index="botsv2" sourcetype="stream:http" www.brewertalk.com kevin
 
 ## 300 Series Questions
 
-### Q300-1: Mallory's critical PowerPoint presentation on her MacBook gets encrypted by ransomware on August 18. What is the name of this file after it was encrypted?
+### Q301: Mallory's critical PowerPoint presentation on her MacBook gets encrypted by ransomware on August 18. What is the name of this file after it was encrypted?
 
 First, let's see if we can identify the Mallory's hostname by running the simple SPL query below and checking the values for the field `host` in a easy to read table.
 
@@ -329,7 +359,7 @@ Interestingly, on 08/19/2017 we see that there's a file called `Frothly_marketin
 **Answer: Frothly_marketing_campaign_Q317.pptx.crypt**
 
 
-### Q300-2: There is a Games of Thrones movie file that was encrypted as well. What season and episode is it? 
+### Q302: There is a Games of Thrones movie file that was encrypted as well. What season and episode is it? 
 
 This should be a relatively straightforward query. We know that the Game of Thrones movie file is on Mallory's host machine and that the encrypted files have a `.crypt` file extension. We can reasonably assume that the file name probably contains some variation of the string "GOT" or "Game of Thrones". Adding `(GOT OR *Thrones)` should capture most of the possible naming conventions one can expect for this Game of Thrones file.
 
@@ -344,7 +374,7 @@ When viewing the events, we see that there is a file named "GoT.S07E02.BOTS.BOTS
 **Answer: S07E02**
 
 
-### Q300-3: Kevin Lagerfield used a USB drive to move malware onto kutekitten, Mallory's personal MacBook. She ran the malware, which obfuscates itself during execution. Provide the vendor name of the USB drive Kevin likely used.
+### Q303: Kevin Lagerfield used a USB drive to move malware onto kutekitten, Mallory's personal MacBook. She ran the malware, which obfuscates itself during execution. Provide the vendor name of the USB drive Kevin likely used.
 
 We can try to run the general SPL query below and see if we can find anything interesting or any additional information to help refine our search.
 
@@ -365,11 +395,80 @@ If we expand the `columns` field within our events, we're presented with additio
 **Answer: Alcor Micro Corp**
 
 
-### Q300-5:
+### Q304: What programming language is at least part of the malware from the question above written in?
+
+To figure out this answer, we need to identify the malware file itself and see if there is a hash value of it somewhere within Splunk. We can then take the hash value and run it through VirusTotal, which would give us more details and insight into the malware, including the language it's written in.
+
+Logically, we can try to think of where the malware could be hidden. Potentially, it could be placed in a folder where files are readily downloaded or is frequently accessed by the user. To figure out the directory path, we'll need to figure out what Mallory's username is on her device (which we think isa Macbook). We know that MacOS typically has a typical user directory path of "/Users/username". 
+
+We can search through the sourcetype `osquery_results` which will likely contain information on the actions and files assocaited with Mallory's host machine. OSquery can be thought of as something akin to Windows Sysmon but is cross-OS platform and is based around a SQL-like/relational database structure. For the purposes of using OSquery in a SIEM like Splunk, we'll just need to know that it's useful for security monitoring and event logging.
+
+With this information in mind, we can build the below SPL query and examine the values for the field `columns.path`
+
+
+```
+index="botsv2" sourcetype="osquery_results" host=kutekitten columns.path="/Users*"
+| table columns.path
+```
+
+
+![Q300-4_1](./images/Q300-4_1.png)
+
+Examining the values, we can tell right away that Mallory's username is `mkraeusen`
+
+With this new information, we can now revise our SPL query to include any subdirectories within `mkraeusen`. Additionally, we'll want to include some additional useful fields that may not initially display with our results, such as `columns.sha1`, `columns.sha256`, and `columns.target_path`.
+
+![Q300-4_2](./images/Q300-4_2.png)
 
 
 
+Taking a closer look at the singular value for `columns.target_path`, it seems to be referencing an "important" and seemingly urgent file from HR housed in the Downloads subfolder. Notice how the file name addresses Mallory by her username? I don't know about you, but I don't think your employer's HR department knows what your pesonal laptop's username is. Could this be caused by a malicious script which inserts the host machine's username as part of the filename?
 
+![Q300-4_3](./images/Q300-4_3.png)
+
+
+We can revise the SPL query to now include this specific path and display the values the fields `columns.sha1` and `columns.sha256` in a table. If we see any values in the table, it'll be associated to this "important" file and we'll run the hash through VirusTotal.
+
+
+![Q300-4_4](./images/Q300-4_4.png)
+
+
+Let's pick the sha256 hash value and run it through VirusTotal. The results will come back indicating that most of the security vendors/engines have associated this sha256 hash value as being associated to the malware "fpsaud" and that it is written in Perl.
+
+
+![Q300-4_5](./images/Q300-4_5.png)
+
+
+**Answer: Perl**
+
+
+### Q305: When was this malware first seen in the wild?
+
+Checking the details tab of the VirusTotal page will indicate the first seen in the wild date of 2017-01-17.
+
+![Q300-4_6](./images/Q300-4_6.png)
+
+**Answer: 2017-01-17**
+
+
+### Q306: The malware infecting kutekitten uses dynamic DNS destinations to communicate with two C&C servers shortly after installation. What is the fully-qualified domain name (FQDN) of the first (alphabetically) of these destinations?
+
+
+Checking the relations tab of the VirusTotal page will indicate that there are 2 domain destinations that are marked with detections. The first alphabetically of these two destinations is eidk.duckdns.org.
+
+**Answer: eidk.duckdns.org**
+
+
+![Q300-6_1](./images/Q300-6_1.png)
+
+
+
+### Q307: From the question above, what is the fully-qualified domain name (FQDN) of the second (alphabetically) contacted C&C server?
+
+
+See solution to Q306. The other domain destionation is eidk.hopto.org.
+
+**Answer: eidk.hopto.org**
 
 
 
@@ -377,5 +476,116 @@ If we expand the `columns` field within our events, we're presented with additio
 
 ## 400 Series Questions
 
+### Q401: A Federal law enforcement agency reports that Taedonggang often spear phishes its victims with zip files that have to be opened with a password. What is the name of the attachment sent to Frothly by a malicious Taedonggang actor?
+
+Logs and details related to emails can be found within the sourcetype `stream:smtp`. We know that the threat actor likes to attach zip files. With this information, we can build the below SPL query and see if anything interesting returns.
+
+![Q401_1](./images/Q401_1.png)
+
+We can see that there's only one value for the field `attach_filename{}`, which is `invoice.zip`, which is likely the malicious attachment.
+
+### Q402: What is the password to open the zip file?
+
+See SPL query to Q401.
+
+By going through the results and examining the `content_body` and ctrl+f for "password", we can see that there's a string referencing password and the value 912345678.
 
 
+![Q402_1](./images/Q402_1.png)
+
+
+**Answer: 912345678**
+
+
+
+### Q403: The Taedonggang APT group encrypts most of their traffic with SSL. What is the "SSL Issuer" that they use for the majority of their traffic?
+
+The hints for this question remind us that there was a IP address scanning Frothly and that we should search this IP address in the sourcetype `stream:tcp` and examine the interesting fields. We can build we below SPL query and place the field `ssl_issuer` in a table:
+
+```
+index=botsv2 sourcetype:"stream:tcp" 45.77.65.211
+| table ssl_issuer
+```
+
+![Q403_1](./images/Q403_1.png)
+
+The table shows us that there is only one unique value for the SSL issuer: C = US.
+
+**Answer: C = US**
+
+
+### Q404: What unusual file (for an American company) does winsys32.dll cause to be downloaded into the Frothly environment?
+
+Let's run a general SPL query and see if we can observe anything interesting.
+
+```
+index=botsv2 winsys32.dll
+```
+
+
+![Q404_1](./images/Q404_1.png)
+
+Interestingly, when we view the values for the field `process`, it looks like winsys32.dll is associated with executing FTP. We can invesigate further by revising our SPL query to search through the sourcetype `stream:ftp` and filtering for only downloads.
+
+```
+index=botsv2 sourcetype="stream:ftp" loadway=Download
+```
+
+![Q404_2](./images/Q404_2.png)
+
+We immediately see an event that has Korean characters for it's filename. Definitely not normal for an American company.
+
+Use CyberChef to encode/decode unicode characters as needed to submit the answer.
+
+**Answer:**
+
+
+
+
+### Q405: What is the first and last name of the poor innocent sap who was implicated in the metadata of the file that executed PowerShell Empire on the first victim's workstation?
+
+Examining the VirusTotal page provided to us in the lab, we can see that the name "Ryan Kovar" is associated with the malware.
+
+![Q405_1](./images/Q405_1.png)
+
+**Answer: Ryan Kovar**
+
+
+### Q406: To maintain persistence in the Frothly network, Taedonggang APT configured several Scheduled Tasks to beacon back to their C2 server. What single webpage is most contacted by these Scheduled Tasks?
+
+The lab gives us the query hint of `index="botsv2" schtasks.exe"` to help us get started. Let's take this but include `Account_Domain=Frothly` in our SPL query below to help us narrow down our results to just the Frothly environment and see if we find any interesting fields.
+
+```
+index=botsv2 Account_Domain=Frothly schtasks.exe
+```
+
+![Q406_2](./images/Q406_2.png)
+
+When examining the interesting fields, we see that there is a field called `tag` and there is a single count for the value `privileged` -- this looks interesting. Let's add this into our query and see what events are returned.
+
+
+```
+indeex=botsv2 Account_Domain=Frothly schtasks.exe tag=privileged
+
+```
+ 
+We see the one singular event and within it we can see a very interesting string for the Process Command Line. The value references "schtasks.exe" which is mentioned in the lab hint, and it seems to be something that is done daily based on the `SC DAILY` string. We also know that it appears to run a PowerShell script based on the string referencing powershell.exe. Even more interestingly, the string subsuquent to calling powershell.exe appears suspicious and seems to be encoded in Base64.
+
+![Q406_3](./images/Q406_3.png)
+
+
+
+We should be pressed to want to investigate this particular finding more. The lab also further hints that we should be on the lookout for registry keywords or data, so let's also narrow our search with the sourcetype for `WinRegistry` to view logs regarding registry. We'll also include `\\Software\\Microsoft\\Network` as a keyword from the unusual string.
+
+There are 4 events and each appear to contain a base64 string in the data field. If we take this string and decode it, we can see there's some very suspicious code that seems to be calling out to the unusual IP address with the single webpage being process.php.
+
+```
+index=botsv2 sourcetype=WinRegistry \\Software\\Microsoft\\Network
+```
+
+![Q406_4](./images/Q406_4.png)
+
+![Q406_1](./images/Q406_1.png)
+
+
+**Answer: process.php**
