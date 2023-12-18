@@ -18,7 +18,7 @@ Logs regarding IAM users can be found within the sourcetype `aws:cloudtrail` and
 index=botsv3 sourcetype=aws:cloudtrail userIdentity.type=IAMUser
 | stats values(userName)
 ```
-![Q200](/splunk-bots/botsv3/images/Q200_1.png)
+![Q200](./images/Q200_1.png)
 
 
 **Answer: bstoll, btun, splunk_access, web_admin**
@@ -35,9 +35,9 @@ index=botsv3 sourcetype=aws:cloudtrail eventType=AwsApiCall
 
 
 
-![Q201_1](/splunk-bots/botsv3/images/Q201_1.png)
+![Q201_1](./images/Q201_1.png)
 
-![Q201_2](/splunk-bots/botsv3/images/Q201_2.png)
+![Q201_2](./images/Q201_2.png)
 
 When examining the fields, there is a field called `userIdentity.sessionContext.attributes.mfaAuthenticated` with the value of `false`. Based on the lengthy and descriptive field name with the value of false, it is most likely associated with events that occured without MFA.
 
@@ -54,7 +54,7 @@ We can simply first run the below query and see if any interesting fields or dat
 index=botsv3 sourcetype=hardware
 ```
 
-![Q202_1](/splunk-bots/botsv3/images/Q202_1.png)
+![Q202_1](./images/Q202_1.png)
 
 Right away, you can examine eiter in the event data or check the field `cpu_type` to see that the web servers use Intel Xeon CPU E5-2676, which the processor number is E5-2676.
 
@@ -70,13 +70,13 @@ For this question, it may be useful to refer to AWS documentation regarding S3 b
 index=botsv3 sourcetype=aws:cloudtrail (putbucketacl OR "put-bucket-acl")
 ```
 
-![204_1](/splunk-bots/botsv3/images/Q204_1.png)
+![204_1](./images/Q204_1.png)
 
 We were able to return 2 events. We can either expand some of the interesting fields within the event data or sift through any interesting fields, such as `requestParameters.AccessControlPolicy.AccessControlList.Grant{}.Grantee.xmlns:URI`, which will show that the bucket is accessible to all users.
 
-![204_2](/splunk-bots/botsv3/images/Q204_2.png)
+![204_2](./images/Q204_2.png)
 
-![204_3](/splunk-bots/botsv3/images/Q204_3.png)
+![204_3](./images/Q204_3.png)
 
 This event corresponds to the Event ID of ab45689d-69cd-41e7-8705-5350402cf7ac.
 
@@ -91,7 +91,7 @@ We can modify the query from Q204 to simply add the command `table` against the 
 index=botsv3 sourcetype=aws:cloudtrail (putbucketacl OR "put-bucket-acl")
 | table userName
 ```
-![205_1](/splunk-bots/botsv3/images/Q205_1.png)
+![205_1](./images/Q205_1.png)
 
 
 **Answer: bstoll**
@@ -111,7 +111,7 @@ To view more specific logs about S3 buckets, we'll need to look into the sourcet
 index=botsv3 sourcetype=aws:s3:accesslogs bucket_name=frothlywebcode operation="REST.PUT.OBJECT" http_status=200
 | table request_uri
 ```
-![207_1](/splunk-bots/botsv3/images/Q207_1.png)
+![207_1](./images/Q207_1.png)
 
 From our table results, it is most likely "OPEN_BUCKET_PLEASE_FIX.txt" based on the urgency and unusual file name.
 
