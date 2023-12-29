@@ -254,4 +254,90 @@ index=botsv3 sourcetype="symantec:ep:security:file"
 
 **Answer: BTUN-L**
 
+
+
+### Q215: What IAM user access key generates the most distinct errors when attempting to access IAM resources?
+
+The question asks us to find the IAM user access key with the most distinct errors when trying to access IAM resources. Based on this, we know that we'll need to implement the `stats dc` command to identify the distinct count.
+
+Within the sourcetype `aws:cloudtrial`, we are interested in the fields `errorMessage` (extracted field which will show the various types of errors), `userIdentity.accessKeyID` (which shows the IAM user access key), `eventSource` (which details which AWS resource is involved), and `errorCode` (which provides the generic success or error value of the event).
+
+Knowing this, we can build the below query to search through cloudtrail logs for events related to IAM resource where the error code excludes successful attempts, and distintly count the quantity of unique error messages sorted by user access key and their corresponding user.
+
+
+```
+index=botsv3 sourcetype=aws:cloudtrail eventSource="iam.amazonaws.com" errorCode!=success
+| stats dc(errorMessage) by userIdentity.accessKeyID, user
+```
+
+![215_1](./images/Q215_1.png)
+
+From our table results, we can see that the user access key AKIAJOGCDXJ5NW5PXUPA has the most distinct errors.
+
+**Answer: AKIAJOGCDXJ5NW5PXUPA**
+
+
+
+### Q216: Bud accidentally commits AWS access keys to an external code repository. Shortly after, he receives a notification from AWS that the account had been compromised. What is the support case ID that Amazon opens on his behalf?
+
+Through the course of completing this BOTS event and sifting through various fields and their values, we know that the Bud is the user BSTOLL, who has the email bstoll@froth.ly. AWS likely notified Bud by email (and per hint which suggests searching through `stream:smtp`) that the account may have been compromised. The support ID is likely found within this email.
+
+To find this email, we can search through the sourcetype `stream:smtp` and add in the generic keywords bstoll@froth.ly, and case aws and see if anything interesting is returned. We'll include wildcards for aws and case just to ensure we aren't too exclusive.
+
+```
+index=botsv3 sourcetype="stream:smtp" bstoll@froth.ly *aws* *case*
+```
+
+
+![216_1](./images/Q216_1.png)
+
+
+We get one event returned, and if we expand the event's content body, we can see that AWS opened the ticket number 5244329601.
+
+**Answer: 5244329601**
+
+
+### Q217: AWS access keys consist of two parts: an access key ID (e.g., AKIAIOSFODNN7EXAMPLE) and a secret access key (e.g., wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY). What is the secret access key of the key that was leaked to the external code repository?
+
+Within the email, AWS states that the access key alongside the corresponding secret key is available online at the specified github repo. If we access the repo, we see that the secret access key is Bx8/gTsYC98T0oWiFhpmdROqhELPtXJSR9vFPNGk.
+
+![217_1](./images/Q217_1.png)
+
+
+**Answer: Bx8/gTsYC98T0oWiFhpmdROqhELPtXJSR9vFPNGk**
+
+
+
+### Q218: Using the leaked key, the adversary makes an unauthorized attempt to create a key for a specific resource. What is the name of that resource? Answer guidance: One word.
+
+We know that the leaked key used is AKIAJOGCDXJ5NW5PXUPA and that the adversary made a failed attempt to create a key. Knowing this, we can build the below query and see if we find anything interesting.
+
+```
+index=botsv3 sourcetype=aws:cloudtrail userIdentity.accessKeyId=AKIAJOGCDXJ5NW5PXUPA eventName=CreateAccessKey
+```
+
+![218_1](./images/Q218_1.png)
+
+One event is returned, and if we examine errorMessage, we see that the adversary attempted to create keys for the resource nullweb_admin
+
+**Answer: nullweb_admin**
+
+### Q219: Using the leaked key, the adversary makes an unauthorized attempt to describe an account. What is the full user agent string of the application that originated the request?
+
+Similar to Q218's query, we're going to search for events associated to the leaked key AKIAJOGCDXJ5NW5PXUPA but with the field `eventName` now pointing to the value of `DescribeAccountAttributes`.
+
+
+```
+index=botsv3 sourcetype=aws:cloudtrail userIdentity.accessKeyId=AKIAJOGCDXJ5NW5PXUPA eventName=DescribeAccountAttributes
+```
+
+![219_1](./images/Q219_1.png)
+
+We get a single event returned, and if we examine the userAgent, we see that the user agent used is ElasticWolf/5.1.6.
+
+**Answer: ElasticWolf/5.1.6**
+
+
+
+
 ## 300 Series Questions
