@@ -339,5 +339,122 @@ We get a single event returned, and if we examine the userAgent, we see that the
 
 
 
+### Q220: What is the full user agent string that uploaded the malicious link file to OneDrive?
+
+The hint suggests using `ms:o365:management` as the sourcetype. Within this sourcetype, there are a few fields we can use to narrow in on relevant events. The fields `Workload` pertain to which O365 product, `SourceFileExtension` pertains to the file's extension type, and `Operation` pertains to the nature of operation/action. Knowing this, we can build the below query and return as a table the resulting values for the field `UserAgent` and see if we get any interesting results.
+
+```
+index=botsv3 sourcetype="ms:o365:management" Workload=OneDrive SourceFileExtension=lnk Operation=FileUploaded
+| table UserAgent
+```
+
+![220_1](./images/Q220_1.png)
+
+Interestingly, we get 1 result back and the user agent string mentions Fedora/Naenara Browser. Fedora is a widely-used and highly recogonized community-driven and open-source Linux distribution. While the distro isn't some obscure Linux flavor, it's not a Linux distro you'd expect to see within a professional enterprise environment used on a employee endpoint device/host. Additionally, a google search of Naenara Browser indicates that it is a North Korean intranet web browser - definitely unusual!
+
+![220_2](./images/Q220_2.png)
+
+**Answer: Mozilla/5.0 (X11; U; Linux i686; ko-KP; rv: 19.1br) Gecko/20130508 Fedora/1.9.1-2.5.rs3.0 NaenaraBrowser/3.5b4**
+
+
+
+### Q221: What was the name of the macro-enabled attachment identified as malware?
+
+The hint provided suggests searching through `stream:smtp` as the sourcetype, which makes sense given that the question's keywords macro-enabled attachment likely suggests an email attachment. Given that we've observed the Frothly environment utilizing O365 products, it's reasonable to assume that they are using Microsoft Outlook. A key behavior in Outlook is when it detects an attached file as malware, it'll actually rename the file as Malware Alert Text.txt.
+
+We can run the general query below and see if we get any interesting events.
+
+```
+index=botsv3 sourcetype="stream:smtp" *malware* *alert*
+```
+
+![221_1](./images/Q221_1.png)
+
+We get only a single event returned, and if we example the extracted field attach_filename, we see the file name of Malware Alert Text.txt, which is likely the malicious file that was renamed by Outlook. 
+
+In order to figure out the original file name, we'll have to inspect the event and it's content closer. When examining the field content, we don't see the original file name readily apparent. But there is a string that appears to be encoded in base64. If we decode the base64 string, we get what appears to be a .xlsm file, which is an Excel macro-enabled file extension.
+
+![221_2](./images/Q221_2.png)
+
+![221_3](./images/Q221_3.png)
+
+**Answer: Frothly-Brewery-Financial-Planning-FY2019-Draft.xlsm**
+
+
+### Q222: What is the name of the executable that was embedded in the malware? Answer guidance: Include the file extension.
+
+The provided hint suggests using `XmlWinEventLog:Microsoft-Windows-Sysmon/Operational` as the sourcetype.
+
+We can build the below generic query with the malicious file name and see if anything interesting is returned. 
+
+```
+index=botsv3 sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" Frothly-Brewery-Financial-Planning-FY2019-Draft
+```
+
+
+![222_1](./images/Q222_1.png)
+
+
+We get a single event correlating to the malicious file name, and we see that there's an additional executable file named HxTsr.exe.
+
+**Answer: HxTsr.exe**
+
+### Q223: What is the password for the user that was successfully created by the user "root" on the on-premises Linux system?
+
+The provided hint suggests using one of the osquery logs for the sourcetype. `osquery:results` logs command lines, which will be helpful as we need to look for commands associated with creating a new account in Linux. We can build the query below and add in the words "adduser" or "useradd" with wildcards, which should capture a part of a command line string used to create new accounts. We'll also add the field `decorations.username` with the value of `root` to narrow in on events associated with the root user.
+
+```
+index=botsv3 sourcetype="osquery:results" "decorations.username"=root (*adduser* OR *useradd*)
+```
+
+![223_1](./images/Q223_1.png)
+
+A single event is returned, and if we examine the event details and expand the columns field, we see that there is a sub field called cmdline which shows a Linux command line related to creating a new user and setting the password.
+
+**Answer: ilovedavidverve**
+
+
+### Q224: What is the name of the user that was created after the endpoint was compromised?
+
+The question provided hint suggests using `WinEventLog:Security` as the source type, which hints to us that the action of creating a new user occured in a Windows environment. When a new user is created in Windows, it generates a EventCode of 4720. Knowing this, we can build the generic query below and see if anything interesting is returned.
+
+```
+index=botsv3 source="WinEventLog:Security" EventCode=4720
+```
+
+![224_1](./images/Q224_1.png)
+
+Our query returns 1 event, and if we examine the single event's details, we see that there is a new user created in the name of svcvnc.
+
+**Answer: svcvnc**
+
+
+### Q225: Based on the previous question, what groups was this user assigned to after the endpoint was compromised? Answer guidance: Comma separated without spaces, in alphabetical order.
+
+We can use the below generic query and throw in the user name svcvnc and table the field `Group_Name` and see which groups it's associated to. We can see the notable resulting values are Administrators and Users. This makes sense as the threat actor would likely add this newly created account to the Admin group to maintain persistence and escalate privileges.
+
+
+```
+index=botsv3 source="WinEventLog:Security" svcvnc
+| table Group_Name
+```
+
+![225_1](./images/Q225_1.png)
+
+
+If we want to double check and examine the event details, we can re-run the query without the table command. We'll see that there are events which detail what appears to be a PowerShell command which adds svcvnv to the local group administrators.
+
+
+![225_2](./images/Q225_2.png)
+
+
+
+**Answer: Administrator, User**
+
+
+### Q226: What is the process ID of the process listening on a "leet" port?
+
+
+
 
 ## 300 Series Questions
