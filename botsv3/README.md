@@ -338,8 +338,12 @@ We get a single event returned, and if we examine the userAgent, we see that the
 **Answer: ElasticWolf/5.1.6**
 
 
+## 300 Series Questions
 
-### Q220: What is the full user agent string that uploaded the malicious link file to OneDrive?
+
+
+
+### Q300: What is the full user agent string that uploaded the malicious link file to OneDrive?
 
 The hint suggests using `ms:o365:management` as the sourcetype. Within this sourcetype, there are a few fields we can use to narrow in on relevant events. The fields `Workload` pertain to which O365 product, `SourceFileExtension` pertains to the file's extension type, and `Operation` pertains to the nature of operation/action. Knowing this, we can build the below query and return as a table the resulting values for the field `UserAgent` and see if we get any interesting results.
 
@@ -358,7 +362,7 @@ Interestingly, we get 1 result back and the user agent string mentions Fedora/Na
 
 
 
-### Q221: What was the name of the macro-enabled attachment identified as malware?
+### Q301: What was the name of the macro-enabled attachment identified as malware?
 
 The hint provided suggests searching through `stream:smtp` as the sourcetype, which makes sense given that the question's keywords macro-enabled attachment likely suggests an email attachment. Given that we've observed the Frothly environment utilizing O365 products, it's reasonable to assume that they are using Microsoft Outlook. A key behavior in Outlook is when it detects an attached file as malware, it'll actually rename the file as Malware Alert Text.txt.
 
@@ -381,7 +385,7 @@ In order to figure out the original file name, we'll have to inspect the event a
 **Answer: Frothly-Brewery-Financial-Planning-FY2019-Draft.xlsm**
 
 
-### Q222: What is the name of the executable that was embedded in the malware? Answer guidance: Include the file extension.
+### Q302: What is the name of the executable that was embedded in the malware? Answer guidance: Include the file extension.
 
 The provided hint suggests using `XmlWinEventLog:Microsoft-Windows-Sysmon/Operational` as the sourcetype.
 
@@ -399,7 +403,7 @@ We get a single event correlating to the malicious file name, and we see that th
 
 **Answer: HxTsr.exe**
 
-### Q223: What is the password for the user that was successfully created by the user "root" on the on-premises Linux system?
+### Q303: What is the password for the user that was successfully created by the user "root" on the on-premises Linux system?
 
 The provided hint suggests using one of the osquery logs for the sourcetype. `osquery:results` logs command lines, which will be helpful as we need to look for commands associated with creating a new account in Linux. We can build the query below and add in the words "adduser" or "useradd" with wildcards, which should capture a part of a command line string used to create new accounts. We'll also add the field `decorations.username` with the value of `root` to narrow in on events associated with the root user.
 
@@ -414,7 +418,7 @@ A single event is returned, and if we examine the event details and expand the c
 **Answer: ilovedavidverve**
 
 
-### Q224: What is the name of the user that was created after the endpoint was compromised?
+### Q304: What is the name of the user that was created after the endpoint was compromised?
 
 The question provided hint suggests using `WinEventLog:Security` as the source type, which hints to us that the action of creating a new user occured in a Windows environment. When a new user is created in Windows, it generates a EventCode of 4720. Knowing this, we can build the generic query below and see if anything interesting is returned.
 
@@ -429,7 +433,7 @@ Our query returns 1 event, and if we examine the single event's details, we see 
 **Answer: svcvnc**
 
 
-### Q225: Based on the previous question, what groups was this user assigned to after the endpoint was compromised? Answer guidance: Comma separated without spaces, in alphabetical order.
+### Q305: Based on the previous question, what groups was this user assigned to after the endpoint was compromised? Answer guidance: Comma separated without spaces, in alphabetical order.
 
 We can use the below generic query and throw in the user name svcvnc and table the field `Group_Name` and see which groups it's associated to. We can see the notable resulting values are Administrators and Users. This makes sense as the threat actor would likely add this newly created account to the Admin group to maintain persistence and escalate privileges.
 
@@ -452,9 +456,104 @@ If we want to double check and examine the event details, we can re-run the quer
 **Answer: Administrator, User**
 
 
-### Q226: What is the process ID of the process listening on a "leet" port?
+### Q306: What is the process ID of the process listening on a "leet" port?
+
+The question provided hint suggests seaching through the sourcetype osquery (in this case, `osquery:results`) for open ports found on the Linux host called hoth. The question also provided hints and asked what numerical values are assocaited to the phrase "leet". A simple google search on the word leet (or if you're familiar with the leetspeak) would indicate the association to the number 1337.
+
+Knowing this, we can build the below query and see if anything interesting is returned. The field `columns.port` is an extracted field pertaining to the port number, so we can set the value to `1337`.
+
+```
+index=botsv3 host=hoth sourcetype="osquery:results" "columns.port"=1337
+```
+
+![306_1](./images/Q306_1.png)
+
+
+We get a single event returned, and if we expand the columns field we see that there is a extracted field called pid (columns.pid) with a value of 14356.
+
+**Answer: 14356**
+
+
+### Q307: What is the MD5 value of the file downloaded to Fyodor's endpoint system and used to scan Frothly's network?
+
+First, we should figure out what Fyodor's hostname is. Simply running the query `index=botsv3 Fyodor` and checking the values for the field `host` will reveal that the hostname is `FYODOR-L`. Next, we know that md5 hash values can be found within the sourcetype `xmlwineventlog:microsoft-windows-sysmon/operational`. We can further narrow in on our query by setting the field `EventDesciption` to `Process Create` to account for the fact that we are looking for events in which a file/process was likely executed to scan the network. 
+
+We can table the results to highlight the fields `app` (pertains to the file name/application), `cmdline` (it's likely the threat actor executed a command to download/execute the malicious file and potentially pass parameters for the network scan), and `hashes` (pertaining to MD5 hash values).
+
+With this information, we can build the below query:
+
+```
+index=botsv3 sourcetype="xmlwineventlog:microsoft-windows-sysmon/operational" host="FYODOR-L" direction=inbound EventDescription="Process Create"
+| table app, cmdline, hashes
+```
+
+![307_1](./images/Q307_1.png)
+
+
+We get a total of 158 events and could manually sift through and see if we find anything interesting. On page 8, we see a cmdline value that reads `C:\windows\temp\hdoor.exe" -hbs 192.168.9.1-192.168.9.50 /b /m /n` associated to the file name hdoor.exe. The file name is suspicious and the command line is reminiscent of network scanning based on the strings "192.168.9.1-192.168.9.50". It reads like passing in a range of internal private network IP addresses to scan for! Using the hash value as the answer indicates this is indeed the malicious file used to scan the Frothly network.
+
+
+![307_2](./images/Q307_2.png)
 
 
 
+**Answer: 586Ef56F4D8963DD546163AC31C865D7**
 
-## 300 Series Questions
+
+### Q308: What port number did the adversary use to download their attack tools?
+
+The question provided hints that a lot of malicious activity occured on Fyodor's endpoint and we can start with his host and that downloads can occur on various protocols (HTTP, TCP, FTP,etc). We'll need to think about this carefully and draw on context clues.
+
+Most file transfers/downloads occur over HTTP, so we can begin our search with `stream:http` as our sourcetype. We also know that we can use `FYODOR-L` as the host. We know that the field `http_method` should be assigned the value of `GET` to account for download activity. Let's use this information to build a query and print out the available matching port numbers and their counts to see if we can find anything interesting.
+
+```
+index=botsv3 sourcetype="stream:http" host="FYODOR-L" http_method=GET
+stats count by dest_port
+```
+![308_1](./images/Q308_1.png)
+
+
+We see that there are three port numbers returned to us: 3333 (with a count of 1), 80 (with a count of  475), 8080 (with a count of 2). Port 3333 appears unusual in this case. While there are needs to use ephemeral port numbers, a single use of port 3333 feels a bit off and should prompt us to look closer at this one singular event and see what URI path and IP address is associated with it. We can modify our query to now read:
+
+```
+index=botsv3 sourcetype="stream:http" host="FYODOR-L" http_method=GET dest_port=3333
+| table uri_path
+```
+![308_2](./images/Q308_2.png)
+
+Our results show us that port 3333 was used to download a file called logos.png from what appears to be an external IP address, which is very unusual.
+
+**Answer: 3333**
+
+
+### Q309: Based on the information gathered for question 1, what file can be inferred to contain the attack tools? Answer guidance: Include the file extension.
+
+See query table results from Q308.
+
+**Answer: logos.png**
+
+### Q310: During the attack, two files are remotely streamed to the /tmp directory of the on-premises Linux server by the adversary. What are the names of these files?
+
+Solution needs further analysis and understanding. Check back for update.
+
+Logs dealing with the Linux server should correlate with the `osquery:results` sourcetype and we should search for the keyword /tmp. We'll notice that there are at least 7 files associated with the unauthorized user tomcat8; 2 of which are colonel and definitelydontinvestigatethisfile.sh.
+
+**Answer: colonel,definitelydontinvestigatethisfile.sh**
+
+
+### Q311: The Taedonggang adversary sent Grace Hoppy an email bragging about the successful exfiltration of customer data. How many Frothly customer emails were exposed or revealed?
+
+We can run the general query below to search through the smtp logs with events that contain the keyword Hoppy.
+
+```
+index=botsv3 sourcetype="stream:smtp" *hoppy*
+```
+
+![311_1](./images/Q311_1.png)
+
+We are returned with 47 events. If we sift through the events, we'll find an email in which Grace forwards an external email to her colleagues panicking over the customer data breach, in which 8 customer emails were exposed.
+
+**Answer: 8**
+
+
+### Q312: What is the path of the URL being accessed by the command and control server? Answer guidance: Provide the full path. (Example: The full path for the URL https://imgur.com/a/mAqgt4S/lasd3.jpg is /a/mAqgt4S/lasd3.jpg)
