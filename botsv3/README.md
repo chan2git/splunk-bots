@@ -10,7 +10,7 @@ This Splunk BOTS recap and walkthrough is based on the Version 3 event. You can 
 
     * [Q201: What field would you use to alert that AWS API activity has occurred without MFA?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q201-what-field-would-you-use-to-alert-that-aws-api-activity-has-occurred-without-mfa)
 
-    * [Q202: What is the processor number used on the web servers?](lhttps://github.com/chan2git/splunk-bots/tree/main/botsv3#q202-what-is-the-processor-number-used-on-the-web-servers-answer-guidance-include-any-special-characterspunctuationink)
+    * [Q202: What is the processor number used on the web servers?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q202-what-is-the-processor-number-used-on-the-web-servers)
 
     * [Q204: Bud accidentally makes an S3 bucket publicly accessible. What is the event ID of the API call that enabled public access?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q204-bud-accidentally-makes-an-s3-bucket-publicly-accessible-what-is-the-event-id-of-the-api-call-that-enabled-public-access)
 
@@ -36,7 +36,7 @@ This Splunk BOTS recap and walkthrough is based on the Version 3 event. You can 
 
     * [Q217: AWS access keys consist of two parts: an access key ID (e.g., AKIAIOSFODNN7EXAMPLE) and a secret access key (e.g., wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY). What is the secret access key of the key that was leaked to the external code repository?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q217-aws-access-keys-consist-of-two-parts-an-access-key-id-eg-akiaiosfodnn7example-and-a-secret-access-key-eg-wjalrxutnfemik7mdengbpxrficyexamplekey-what-is-the-secret-access-key-of-the-key-that-was-leaked-to-the-external-code-repository)
 
-    * [Q218: Using the leaked key, the adversary makes an unauthorized attempt to create a key for a specific resource. What is the name of that resource?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q218-using-the-leaked-key-the-adversary-makes-an-unauthorized-attempt-to-create-a-key-for-a-specific-resource-what-is-the-name-of-that-resource-answer-guidance-one-word)
+    * [Q218: Using the leaked key, the adversary makes an unauthorized attempt to create a key for a specific resource. What is the name of that resource?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q202-what-is-the-processor-number-used-on-the-web-servers)
 
     * [Q219: Using the leaked key, the adversary makes an unauthorized attempt to describe an account. What is the full user agent string of the application that originated the request?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q219-using-the-leaked-key-the-adversary-makes-an-unauthorized-attempt-to-describe-an-account-what-is-the-full-user-agent-string-of-the-application-that-originated-the-request)
     
@@ -46,13 +46,13 @@ This Splunk BOTS recap and walkthrough is based on the Version 3 event. You can 
 
     * [Q301: What was the name of the macro-enabled attachment identified as malware?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q301-what-was-the-name-of-the-macro-enabled-attachment-identified-as-malware)
 
-    * [Q302: What is the name of the executable that was embedded in the malware? Answer guidance: Include the file extension.](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q302-what-is-the-name-of-the-executable-that-was-embedded-in-the-malware-answer-guidance-include-the-file-extension)
+    * [Q302: What is the name of the executable that was embedded in the malware? Answer guidance: Include the file extension.](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q302-what-is-the-name-of-the-executable-that-was-embedded-in-the-malware)
 
     * [Q303: What is the password for the user that was successfully created by the user "root" on the on-premises Linux system?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q303-what-is-the-password-for-the-user-that-was-successfully-created-by-the-user-root-on-the-on-premises-linux-system)
 
     * [Q304: What is the name of the user that was created after the endpoint was compromised?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q304-what-is-the-name-of-the-user-that-was-created-after-the-endpoint-was-compromised)
 
-    * [Q305: Based on the previous question, what groups was this user assigned to after the endpoint was compromised?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q305-based-on-the-previous-question-what-groups-was-this-user-assigned-to-after-the-endpoint-was-compromised-answer-guidance-comma-separated-without-spaces-in-alphabetical-order)
+    * [Q305: Based on the previous question, what groups was this user assigned to after the endpoint was compromised?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q305-based-on-the-previous-question-what-groups-was-this-user-assigned-to-after-the-endpoint-was-compromised)
 
     * [Q306: What is the process ID of the process listening on a "leet" port?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q306-what-is-the-process-id-of-the-process-listening-on-a-leet-port)
 
@@ -60,13 +60,13 @@ This Splunk BOTS recap and walkthrough is based on the Version 3 event. You can 
 
     * [Q308: What port number did the adversary use to download their attack tools?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q308-what-port-number-did-the-adversary-use-to-download-their-attack-tools)
 
-    * [Q309: Based on the information gathered for question 1, what file can be inferred to contain the attack tools?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q309-based-on-the-information-gathered-for-question-1-what-file-can-be-inferred-to-contain-the-attack-tools-answer-guidance-include-the-file-extension)
+    * [Q309: Based on the information gathered for question 1, what file can be inferred to contain the attack tools?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q309-based-on-the-information-gathered-for-question-1-what-file-can-be-inferred-to-contain-the-attack-tools)
 
-    * [Q310: During the attack, two files are remotely streamed to the /tmp directory of the on-premises Linux server by the adversary. What are the names of these files?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q309-based-on-the-information-gathered-for-question-1-what-file-can-be-inferred-to-contain-the-attack-tools-answer-guidance-include-the-file-extension)
+    * [Q310: During the attack, two files are remotely streamed to the /tmp directory of the on-premises Linux server by the adversary. What are the names of these files?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q310-during-the-attack-two-files-are-remotely-streamed-to-the-tmp-directory-of-the-on-premises-linux-server-by-the-adversary-what-are-the-names-of-these-files)
 
     * [Q311: The Taedonggang adversary sent Grace Hoppy an email bragging about the successful exfiltration of customer data. How many Frothly customer emails were exposed or revealed?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q311-the-taedonggang-adversary-sent-grace-hoppy-an-email-bragging-about-the-successful-exfiltration-of-customer-data-how-many-frothly-customer-emails-were-exposed-or-revealed)
 
-    * [Q312: What is the path of the URL being accessed by the command and control server?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q312-what-is-the-path-of-the-url-being-accessed-by-the-command-and-control-server-answer-guidance-provide-the-full-path)
+    * [Q312: What is the path of the URL being accessed by the command and control server?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q310-during-the-attack-two-files-are-remotely-streamed-to-the-tmp-directory-of-the-on-premises-linux-server-by-the-adversary-what-are-the-names-of-these-files)
 
     * [Q313: At least two Frothly endpoints contact the adversary's command and control infrastructure. What are their short hostnames?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q313-at-least-two-frothly-endpoints-contact-the-adversarys-command-and-control-infrastructure-what-are-their-short-hostnames)
 

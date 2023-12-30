@@ -8,7 +8,7 @@
  
  - [Splunk BOTSv1](https://github.com/chan2git/splunk-bots/tree/main/botsv1) (completed) :white_check_mark:
  - [Splunk BOTSv2](https://github.com/chan2git/splunk-bots/tree/main/botsv2) (completed) :white_check_mark:
- - [Splunk BOTSv3](https://github.com/chan2git/splunk-bots/tree/main/botsv3) (in-progress) :soon:
+ - [Splunk BOTSv3](https://github.com/chan2git/splunk-bots/tree/main/botsv3) (completed) :white_check_mark:
 
 
  # Tips
