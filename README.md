@@ -13,9 +13,9 @@
 
  # Tips
 
- * If you find yourself stuck for an extended period of time, walk away, sleep on it, and come back with fresh eyes. There were instances where I would return to a previous question and have a new perspective on how to logically approach the solution.
+ * If you find yourself stuck for an extended period of time, try walking away, sleeping on it, and come back with fresh eyes. There were instances where I would return to a previous question and have a new perspective on how to logically approach the solution.
 
- * There is no shame in needing help and finding other people's walkthroughs to reverse engineer the solution. The most important thing is that you geninuely the solution and would be able to implement it if you were to come across a similar problem next time. You can learn a lot when you work backwords.
+ * There is no shame in needing help and finding other people's walkthroughs to reverse engineer the solution. The most important thing is that you geninuely understand the solution and would be able to implement it if you were to come across a similar problem next time. You can learn a lot when you work backwords.
 
  * There is no single SPL query solution. There are several ways to achieve the correct answer. Experiment with different approaches and ask yourself "how else could I have found the answer". Being able to come up with multiple approaches with different perpectives is indicative of geniuely understanding the material.
 
