@@ -28,7 +28,7 @@ This Splunk BOTS recap and walkthrough is based on the Version 3 event. You can 
 
     * [Q213: According to Symantec's website, what is the severity of this specific coin miner threat?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q213-according-to-symantecs-website-what-is-the-severity-of-this-specific-coin-miner-threat)
 
-    * [Q214: What is the short hostname of the only Frothly endpoint to show evidence of defeating the cryptocurrency threat?](lihttps://github.com/chan2git/splunk-bots/tree/main/botsv3#q214-what-is-the-short-hostname-of-the-only-frothly-endpoint-to-show-evidence-of-defeating-the-cryptocurrency-threatnk)
+    * [Q214: What is the short hostname of the only Frothly endpoint to show evidence of defeating the cryptocurrency threat?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q214-what-is-the-short-hostname-of-the-only-frothly-endpoint-to-show-evidence-of-defeating-the-cryptocurrency-threatnk)
 
     * [Q215: What IAM user access key generates the most distinct errors when attempting to access IAM resources?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q215-what-iam-user-access-key-generates-the-most-distinct-errors-when-attempting-to-access-iam-resources)
 
