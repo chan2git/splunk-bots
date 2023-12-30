@@ -4,12 +4,71 @@ This Splunk BOTS recap and walkthrough is based on the Version 3 event. You can 
 
 
 ## Table of Contents
-* 200 Series Question
-    * 
+* [200 Series Question](https://github.com/chan2git/splunk-bots/tree/main/botsv3#200-series-questions)
 
+    * [Q200: List out the IAM users that accessed an AWS service (successfully or unsuccessfully) in Frothly's AWS environment?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q200-list-out-the-iam-users-that-accessed-an-aws-service-successfully-or-unsuccessfully-in-frothlys-aws-environment)
 
+    * [Q201: What field would you use to alert that AWS API activity has occurred without MFA?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q201-what-field-would-you-use-to-alert-that-aws-api-activity-has-occurred-without-mfa)
 
-* 300 Series Question
+    * [Q202: What is the processor number used on the web servers?](lhttps://github.com/chan2git/splunk-bots/tree/main/botsv3#q202-what-is-the-processor-number-used-on-the-web-servers-answer-guidance-include-any-special-characterspunctuationink)
+
+    * [Q204: Bud accidentally makes an S3 bucket publicly accessible. What is the event ID of the API call that enabled public access?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q204-bud-accidentally-makes-an-s3-bucket-publicly-accessible-what-is-the-event-id-of-the-api-call-that-enabled-public-access)
+
+    * [Q205: What is Bud's username?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q205-what-is-buds-username)
+
+    * [Q207: What is the name of the text file that was successfully uploaded into the S3 bucket while it was publicly accessible?xt](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q206-what-is-the-name-of-the-s3-bucket-that-was-made-publicly-accessible)
+
+    * [Q208: What is the FQDN of the endpoint that is running a different Windows operating system edition than the others?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q208-what-is-the-fqdn-of-the-endpoint-that-is-running-a-different-windows-operating-system-edition-than-the-others)
+
+    * [Q209: A Frothly endpoint exhibits signs of coin mining activity. What is the name of the second process to reach 100 percent CPU processor utilization time from this activity on this endpoint?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q209-a-frothly-endpoint-exhibits-signs-of-coin-mining-activity-what-is-the-name-of-the-second-process-to-reach-100-percent-cpu-processor-utilization-time-from-this-activity-on-this-endpoint)
+
+    * [Q210: What is the short hostname of the only Frothly endpoint to actually mine Monero cryptocurrency?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q210-what-is-the-short-hostname-of-the-only-frothly-endpoint-to-actually-mine-monero-cryptocurrency)
+
+    * [Q212: What is the name of the attack?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q212-what-is-the-name-of-the-attack)
+
+    * [Q213: According to Symantec's website, what is the severity of this specific coin miner threat?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q213-according-to-symantecs-website-what-is-the-severity-of-this-specific-coin-miner-threat)
+
+    * [Q214: What is the short hostname of the only Frothly endpoint to show evidence of defeating the cryptocurrency threat?](lihttps://github.com/chan2git/splunk-bots/tree/main/botsv3#q214-what-is-the-short-hostname-of-the-only-frothly-endpoint-to-show-evidence-of-defeating-the-cryptocurrency-threatnk)
+
+    * [Q215: What IAM user access key generates the most distinct errors when attempting to access IAM resources?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q215-what-iam-user-access-key-generates-the-most-distinct-errors-when-attempting-to-access-iam-resources)
+
+    * [Q216: Bud accidentally commits AWS access keys to an external code repository. Shortly after, he receives a notification from AWS that the account had been compromised. What is the support case ID that Amazon opens on his behalf?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q216-bud-accidentally-commits-aws-access-keys-to-an-external-code-repository-shortly-after-he-receives-a-notification-from-aws-that-the-account-had-been-compromised-what-is-the-support-case-id-that-amazon-opens-on-his-behalf)
+
+    * [Q217: AWS access keys consist of two parts: an access key ID (e.g., AKIAIOSFODNN7EXAMPLE) and a secret access key (e.g., wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY). What is the secret access key of the key that was leaked to the external code repository?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q217-aws-access-keys-consist-of-two-parts-an-access-key-id-eg-akiaiosfodnn7example-and-a-secret-access-key-eg-wjalrxutnfemik7mdengbpxrficyexamplekey-what-is-the-secret-access-key-of-the-key-that-was-leaked-to-the-external-code-repository)
+
+    * [Q218: Using the leaked key, the adversary makes an unauthorized attempt to create a key for a specific resource. What is the name of that resource?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q218-using-the-leaked-key-the-adversary-makes-an-unauthorized-attempt-to-create-a-key-for-a-specific-resource-what-is-the-name-of-that-resource-answer-guidance-one-word)
+
+    * [Q219: Using the leaked key, the adversary makes an unauthorized attempt to describe an account. What is the full user agent string of the application that originated the request?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q219-using-the-leaked-key-the-adversary-makes-an-unauthorized-attempt-to-describe-an-account-what-is-the-full-user-agent-string-of-the-application-that-originated-the-request)
+    
+* [300 Series Question](https://github.com/chan2git/splunk-bots/tree/main/botsv3#300-series-questions)
+
+    * [Q300: What is the full user agent string that uploaded the malicious link file to OneDrive?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q300-what-is-the-full-user-agent-string-that-uploaded-the-malicious-link-file-to-onedrive)
+
+    * [Q301: What was the name of the macro-enabled attachment identified as malware?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q301-what-was-the-name-of-the-macro-enabled-attachment-identified-as-malware)
+
+    * [Q302: What is the name of the executable that was embedded in the malware? Answer guidance: Include the file extension.](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q302-what-is-the-name-of-the-executable-that-was-embedded-in-the-malware-answer-guidance-include-the-file-extension)
+
+    * [Q303: What is the password for the user that was successfully created by the user "root" on the on-premises Linux system?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q303-what-is-the-password-for-the-user-that-was-successfully-created-by-the-user-root-on-the-on-premises-linux-system)
+
+    * [Q304: What is the name of the user that was created after the endpoint was compromised?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q304-what-is-the-name-of-the-user-that-was-created-after-the-endpoint-was-compromised)
+
+    * [Q305: Based on the previous question, what groups was this user assigned to after the endpoint was compromised?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q305-based-on-the-previous-question-what-groups-was-this-user-assigned-to-after-the-endpoint-was-compromised-answer-guidance-comma-separated-without-spaces-in-alphabetical-order)
+
+    * [Q306: What is the process ID of the process listening on a "leet" port?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q306-what-is-the-process-id-of-the-process-listening-on-a-leet-port)
+
+    * [Q307: What is the MD5 value of the file downloaded to Fyodor's endpoint system and used to scan Frothly's network?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q307-what-is-the-md5-value-of-the-file-downloaded-to-fyodors-endpoint-system-and-used-to-scan-frothlys-network)
+
+    * [Q308: What port number did the adversary use to download their attack tools?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q308-what-port-number-did-the-adversary-use-to-download-their-attack-tools)
+
+    * [Q309: Based on the information gathered for question 1, what file can be inferred to contain the attack tools?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q309-based-on-the-information-gathered-for-question-1-what-file-can-be-inferred-to-contain-the-attack-tools-answer-guidance-include-the-file-extension)
+
+    * [Q310: During the attack, two files are remotely streamed to the /tmp directory of the on-premises Linux server by the adversary. What are the names of these files?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q309-based-on-the-information-gathered-for-question-1-what-file-can-be-inferred-to-contain-the-attack-tools-answer-guidance-include-the-file-extension)
+
+    * [Q311: The Taedonggang adversary sent Grace Hoppy an email bragging about the successful exfiltration of customer data. How many Frothly customer emails were exposed or revealed?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q311-the-taedonggang-adversary-sent-grace-hoppy-an-email-bragging-about-the-successful-exfiltration-of-customer-data-how-many-frothly-customer-emails-were-exposed-or-revealed)
+
+    * [Q312: What is the path of the URL being accessed by the command and control server?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q312-what-is-the-path-of-the-url-being-accessed-by-the-command-and-control-server-answer-guidance-provide-the-full-path)
+
+    * [Q313: At least two Frothly endpoints contact the adversary's command and control infrastructure. What are their short hostnames?](https://github.com/chan2git/splunk-bots/tree/main/botsv3#q313-at-least-two-frothly-endpoints-contact-the-adversarys-command-and-control-infrastructure-what-are-their-short-hostnames)
 
 
 ## 200 Series Questions
@@ -48,7 +107,7 @@ When examining the fields, there is a field called `userIdentity.sessionContext.
 **Answer: userIdentity.sessionContext.attributes.mfaAuthenticated**
 
 
-### Q202: What is the processor number used on the web servers? Answer guidance: Include any special characters/punctuation.
+### Q202: What is the processor number used on the web servers?
 
 The lab provided hint suggests using the sourcetype `hardware`.
 
@@ -312,7 +371,7 @@ Within the email, AWS states that the access key alongside the corresponding sec
 
 
 
-### Q218: Using the leaked key, the adversary makes an unauthorized attempt to create a key for a specific resource. What is the name of that resource? Answer guidance: One word.
+### Q218: Using the leaked key, the adversary makes an unauthorized attempt to create a key for a specific resource. What is the name of that resource?
 
 We know that the leaked key used is AKIAJOGCDXJ5NW5PXUPA and that the adversary made a failed attempt to create a key. Knowing this, we can build the below query and see if we find anything interesting.
 
@@ -389,7 +448,7 @@ In order to figure out the original file name, we'll have to inspect the event a
 **Answer: Frothly-Brewery-Financial-Planning-FY2019-Draft.xlsm**
 
 
-### Q302: What is the name of the executable that was embedded in the malware? Answer guidance: Include the file extension.
+### Q302: What is the name of the executable that was embedded in the malware?
 
 The provided hint suggests using `XmlWinEventLog:Microsoft-Windows-Sysmon/Operational` as the sourcetype.
 
@@ -437,7 +496,7 @@ Our query returns 1 event, and if we examine the single event's details, we see 
 **Answer: svcvnc**
 
 
-### Q305: Based on the previous question, what groups was this user assigned to after the endpoint was compromised? Answer guidance: Comma separated without spaces, in alphabetical order.
+### Q305: Based on the previous question, what groups was this user assigned to after the endpoint was compromised?
 
 We can use the below generic query and throw in the user name svcvnc and table the field `Group_Name` and see which groups it's associated to. We can see the notable resulting values are Administrators and Users. This makes sense as the threat actor would likely add this newly created account to the Admin group to maintain persistence and escalate privileges.
 
@@ -530,7 +589,7 @@ Our results show us that port 3333 was used to download a file called logos.png 
 **Answer: 3333**
 
 
-### Q309: Based on the information gathered for question 1, what file can be inferred to contain the attack tools? Answer guidance: Include the file extension.
+### Q309: Based on the information gathered for question 1, what file can be inferred to contain the attack tools?
 
 See query table results from Q308.
 
@@ -560,7 +619,7 @@ We are returned with 47 events. If we sift through the events, we'll find an ema
 **Answer: 8**
 
 
-### Q312: What is the path of the URL being accessed by the command and control server? Answer guidance: Provide the full path.
+### Q312: What is the path of the URL being accessed by the command and control server?
 
 The hint provided for this question suggests that we search within the sourcetype `XmlWinEventLog:Microsoft-Windows-Sysmon/Operational`, or review the PowerShell scripts executed on various Frothly host machines. Based on this, we can deduce that we should be examining unusual PowerShell scripts executed on a potentially compromised user.
 
