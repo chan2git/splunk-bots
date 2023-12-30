@@ -5,6 +5,10 @@ This Splunk BOTS recap and walkthrough is based on the Version 3 event. You can 
 
 ## Table of Contents
 * 200 Series Question
+    * 
+
+
+
 * 300 Series Question
 
 
@@ -556,4 +560,38 @@ We are returned with 47 events. If we sift through the events, we'll find an ema
 **Answer: 8**
 
 
-### Q312: What is the path of the URL being accessed by the command and control server? Answer guidance: Provide the full path. (Example: The full path for the URL https://imgur.com/a/mAqgt4S/lasd3.jpg is /a/mAqgt4S/lasd3.jpg)
+### Q312: What is the path of the URL being accessed by the command and control server? Answer guidance: Provide the full path.
+
+The hint provided for this question suggests that we search within the sourcetype `XmlWinEventLog:Microsoft-Windows-Sysmon/Operational`, or review the PowerShell scripts executed on various Frothly host machines. Based on this, we can deduce that we should be examining unusual PowerShell scripts executed on a potentially compromised user.
+
+Instead of searching through Sysmon, we'll search through the source for PowerShell `WinEventLog:Microsoft-Windows_PowerShell/Operational`. While there are a few compromised Frothly machines, let's focus on one at a time and move on/adjust if needed. In this case, we'll start with the host `FYODOR-L` since Fyodor's machine seems to be the star of this question set. PowerShell command scripts could captured in the field `Message`, and we know from the question that a URL is involved. This means that we should narrow our search by setting the value of `*/*` to `Message`. We don't know what the URL is yet, but we can assume that it's in the format of "wildcard/wildcard". With this information, we can build the below query:
+
+```
+index=botsv3 source="WinEventLog:Microsoft-Windows-PowerShell/Operational" host="FYODOR-L" Message="*/*"
+```
+
+
+![312_1](./images/Q312_1.png)
+
+Six events are returned, which is pretty good if we're going to manually sift through the strings found in the extracted field of Message. When manually looking at the Message string, we can see that there are a few URLs that were accessed, such as "/news.php", "/lohin/process.php", etc. Using trial and error, we can determine that the correct answer is "/admin/get.php".
+
+![312_2](./images/Q312_2.png)
+
+
+**Answer: /admin/get.php**
+
+### Q313: At least two Frothly endpoints contact the adversary's command and control infrastructure. What are their short hostnames?
+
+We can actually revise Q312's query and display as a table which hosts match the events:
+
+```
+index=botsv3 source="WinEventLog:Microsoft-Windows-PowerShell/Operational" Message="*/*"
+| table host
+| dedup host
+```
+
+![313_1](./images/Q313_1.png)
+
+We are returned with two unique values for `host`: FYODOR-L and ABUNGST-L.
+
+**Answer: FYODOR-L,ABUNGST-L**
